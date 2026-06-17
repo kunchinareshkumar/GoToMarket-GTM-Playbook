@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go-to-Market Strategy — Complete Playbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0b0b0f;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a26;
+            --bg-card: #1e1e2c;
+            --accent: #d4a843;
+            --accent-dim: #a8852e;
+            --accent-glow: rgba(212, 168, 67, 0.15);
+            --text-primary: #f0ece4;
+            --text-secondary: #b8b2a6;
+            --text-muted: #6e6a62;
+            --border: rgba(212, 168, 67, 0.12);
+            --border-strong: rgba(212, 168, 67, 0.25);
+            --success: #5cb87a;
+            --info: #5b9bd5;
+            --warning: #d4a843;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ─── NAVIGATION ─── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(11, 11, 15, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-brand span {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .hamburger svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 6rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 120%;
+            background: radial-gradient(ellipse, rgba(212, 168, 67, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -10%;
+            width: 60%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(91, 155, 213, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .hero-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-meta strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1s forwards;
+        }
+
+        .hero-scroll .line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ─── MAIN LAYOUT ─── */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 3rem;
+            padding: 0 2rem 6rem;
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+            padding-right: 1rem;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 4px;
+        }
+
+        .sidebar-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar nav a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            color: var(--accent);
+            background: var(--accent-glow);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar nav a.indent {
+            padding-left: 1.5rem;
+            font-size: 0.68rem;
+        }
+
+        /* ─── CONTENT ─── */
+        .content {
+            min-width: 0;
+        }
+
+        /* ─── SECTIONS ─── */
+        .part {
+            margin-bottom: 5rem;
+        }
+
+        .part-header {
+            position: relative;
+            padding: 3rem 0 2rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .part-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.12;
+            position: absolute;
+            top: 0;
+            left: 0;
+            line-height: 1;
+        }
+
+        .part-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .part-header p {
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            max-width: 700px;
+            font-size: 1rem;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin: 2rem 0 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-strong);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-accent {
+            border-left: 3px solid var(--accent);
+        }
+
+        .card h4 {
+            margin-top: 0;
+        }
+
+        /* ─── GRID LAYOUTS ─── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-5 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* ─── ELEMENT CARDS ─── */
+        .element-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .element-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .element-card .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.15;
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            line-height: 1;
+        }
+
+        .element-card h5 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .element-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* ─── TABLE ─── */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background: var(--bg-elevated);
+        }
+
+        th {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-strong);
+        }
+
+        td {
+            padding: 0.85rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--accent-glow);
+        }
+
+        td strong {
+            color: var(--text-primary);
+        }
+
+        /* ─── TIMELINE / PHASES ─── */
+        .phase-timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .phase-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-dim), transparent);
+        }
+
+        .phase-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding: 1.75rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .phase-item:hover {
+            border-color: var(--border-strong);
+        }
+
+        .phase-item::before {
+            content: '';
+            position: absolute;
+            left: -2.15rem;
+            top: 2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
+
+        .phase-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-item h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-transform: none;
+            letter-spacing: 0;
+            margin: 0 0 0.5rem;
+        }
+
+        .phase-item p {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .phase-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .phase-item ul li {
+            padding: 0.25rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .phase-item ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        /* ─── CHECKLIST ─── */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.25rem;
+            transition: background 0.2s ease;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .checklist li:hover {
+            background: var(--accent-glow);
+        }
+
+        .checklist li .check {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-strong);
+            border-radius: 4px;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .checklist li.checked .check {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ─── EMAIL TEMPLATES ─── */
+        .email-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .email-block:hover {
+            border-color: var(--border-strong);
+        }
+
+        .email-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.75rem;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .email-header:hover {
+            background: var(--bg-card);
+        }
+
+        .email-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .email-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.4;
+            min-width: 2rem;
+        }
+
+        .email-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .email-subtitle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .email-toggle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .email-block.open .email-toggle {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .email-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .email-block.open .email-body {
+            max-height: 2000px;
+        }
+
+        .email-body-inner {
+            padding: 1.75rem;
+        }
+
+        .email-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .email-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .email-meta-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .email-meta-value {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .email-why {
+            background: var(--accent-glow);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .email-why strong {
+            color: var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .email-code {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .email-code .subject {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .email-code .bracket {
+            color: var(--info);
+        }
+
+        .email-code .ps {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ─── TEMPLATE BLOCK ─── */
+        .template-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .template-block .key {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .template-block .sep {
+            color: var(--text-muted);
+        }
+
+        /* ─── STATS ROW ─── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ─── PRINCIPLES ─── */
+        .principle {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.5rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .principle:hover {
+            border-color: var(--border-strong);
+        }
+
+        .principle-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.25;
+            min-width: 2.5rem;
+            line-height: 1;
+        }
+
+        .principle-content h5 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .principle-content p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ─── SUBJECT LINES BOX ─── */
+        .subject-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .subject-example {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1.1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .subject-example:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--text-primary);
+        }
+
+        /* ─── CTA EXAMPLES ─── */
+        .cta-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .cta-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1.25rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .cta-item:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        /* ─── KEY TAKEAWAYS ─── */
+        .takeaway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .takeaway {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .takeaway:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .takeaway .tk-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+            opacity: 0.15;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .takeaway h5 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .takeaway p {
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-meta {
+            margin-top: 2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(11, 11, 15, 0.97);
+                backdrop-filter: blur(20px);
+                z-index: 999;
+                padding: 2rem;
+                overflow-y: auto;
+            }
+
+            .sidebar.open {
+                display: block;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .part-header h2 {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-5 {
+                grid-template-columns: 1fr;
+            }
+
+            .email-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .email-toggle {
+                align-self: flex-end;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════ NAVIGATION ═══════ -->
+    <header class="nav" id="nav">
+        <div class="nav-inner">
+            <div class="nav-brand">GTM PLAYBOOK <span>2026</span></div>
+            <ul class="nav-links">
+                <li><a href="#foundations">Foundations</a></li>
+                <li><a href="#types">Types</a></li>
+                <li><a href="#plan">90-Day Plan</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#emails">Emails</a></li>
+                <li><a href="#takeaways">Takeaways</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Complete Strategy Playbook</div>
+            <h1>Go-to-Market<br><em>Strategy</em></h1>
+            <p class="hero-subtitle">A comprehensive framework for launching products, entering markets, and building revenue engines — from first principles to outbound execution.</p>
+            <div class="hero-meta">
+                <div><strong>11</strong> Parts</div>
+                <div><strong>15</strong> Email Templates</div>
+                <div><strong>12</strong> GTM Phases</div>
+                <div><strong>1</strong> Complete Playbook</div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- ═══════ MAIN WRAPPER ═══════ -->
+    <div class="main-wrapper">
+
+        <!-- ═══════ SIDEBAR ═══════ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title">Table of Contents</div>
+            <nav>
+                <a href="#foundations">1. Foundations of GTM</a>
+                <a href="#what-is" class="indent">What Is GTM?</a>
+                <a href="#why-important" class="indent">Why It Matters</a>
+                <a href="#five-elements" class="indent">5 Essential Elements</a>
+                <a href="#fifteen-components" class="indent">15 Components</a>
+                <a href="#types">2. Types of GTM Strategies</a>
+                <a href="#b2b-b2c" class="indent">B2B vs B2C</a>
+                <a href="#plan">3. 30-60-90 Day Plan</a>
+                <a href="#methodology">4. 12-Phase Methodology</a>
+                <a href="#checklist">5. GTM Checklist</a>
+                <a href="#sales-playbook">6. Sales Playbook</a>
+                <a href="#emails">7. GTM Email Templates</a>
+                <a href="#writing-principles">8. Writing Principles</a>
+                <a href="#metrics">9. Key Metrics</a>
+                <a href="#template">10. Strategy Template</a>
+                <a href="#takeaways">11. Key Takeaways</a>
+            </nav>
+        </aside>
+
+        <!-- ═══════ CONTENT ═══════ -->
+        <main class="content">
+
+            <!-- ─── PART 1: FOUNDATIONS ─── -->
+            <section class="part reveal" id="foundations">
+                <div class="part-header">
+                    <span class="part-number">01</span>
+                    <h2>Foundations of a Go-to-Market Strategy</h2>
+                    <p>Understanding the building blocks that separate successful product launches from the 80% that fail.</p>
+                </div>
+
+                <!-- WHAT IS GTM -->
+                <div id="what-is">
+                    <h3>What Is a Go-to-Market Strategy?</h3>
+                    <p>A Go-to-Market (GTM) strategy is a comprehensive, tactical plan that outlines how a company will <strong>position, price, promote, and distribute</strong> a product or service to its target audience. It fuses together a range of business functions — including product, marketing, sales, and customer intelligence — to form a fully aligned value proposition and action plan for launching and scaling a new product.</p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspect</th>
+                                    <th>GTM Strategy</th>
+                                    <th>Marketing Strategy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Scope</strong></td>
+                                    <td>Broader, cross-functional (sales, product, marketing, distribution, support)</td>
+                                    <td>Focused on marketing activities and brand growth</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Timeframe</strong></td>
+                                    <td>Typically a one-time or time-bound plan for a specific launch</td>
+                                    <td>Continuous and long-term</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Objective</strong></td>
+                                    <td>Successfully launch a product or enter a new market</td>
+                                    <td>Build awareness, drive demand, and retain customers</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Primary Focus</strong></td>
+                                    <td>Product launch or market entry</td>
+                                    <td>Ongoing demand generation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Goal</strong></td>
+                                    <td>Market entry success, initial traction</td>
+                                    <td>Sustained growth, profitability, and market share</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- WHY IMPORTANT -->
+                <div id="why-important">
+                    <h3>Why Is a GTM Strategy Important?</h3>
+
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-value">80%</div>
+                            <div class="stat-label">New Products Fail</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">3x</div>
+                            <div class="stat-label">Faster Time to Market</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">50%</div>
+                            <div class="stat-label">Lower Launch Risk</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">2x</div>
+                            <div class="stat-label">Revenue Acceleration</div>
+                        </div>
+                    </div>
+
+                    <p>A well-crafted GTM strategy mitigates risk by ensuring product-market fit, reducing time to market, minimizing costly failed launches, optimizing resource allocation, delivering consistent customer experiences, accelerating revenue, and strengthening brand equity.</p>
+                </div>
+
+                <!-- FIVE ELEMENTS -->
+                <div id="five-elements">
+                    <h3>The Five Essential Elements</h3>
+                    <div class="grid-5">
+                        <div class="element-card">
+                            <span class="num">01</span>
+                            <h5>Market Definition</h5>
+                            <p>Which markets will you target? Identify TAM, SAM, and SOM.</p>
+                        </div>
+                        <div class="element-card">
+                            <span class="num">02</span>
+                            <h5>Target Customers</h5>
+                            <p>Who is your ideal customer? Demographics, pain points, willingness to pay.</p>
+                        </div>
+                        <div class="element-card">
+                            <span class="num">03</span>
+                            <h5>Distribution Model</h5>
+                            <p>How will you deliver the product? Direct, channel, digital, or hybrid.</p>
+                        </div>
+                        <div class="element-card">
+                            <span class="num">04</span>
+                            <h5>Product Messaging</h5>
+                            <p>What are you selling and what makes it unique? Value prop and differentiation.</p>
+                        </div>
+                        <div class="element-card">
+                            <span class="num">05</span>
+                            <h5>Pricing</h5>
+                            <p>How much should it cost? Consider costs, market, competition, and perceived value.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15 COMPONENTS -->
+                <div id="fifteen-components">
+                    <h3>Extended GTM Framework: 15 Components</h3>
+                    <div class="grid-3">
+                        <div class="element-card"><span class="num">01</span><h5>Market Analysis</h5><p>Size, growth potential, trends, and customer behavior.</p></div>
+                        <div class="element-card"><span class="num">02</span><h5>Target Customer</h5><p>Ideal customer profiles, challenges, buying patterns.</p></div>
+                        <div class="element-card"><span class="num">03</span><h5>Value Proposition</h5><p>Compelling statement of benefits your product delivers.</p></div>
+                        <div class="element-card"><span class="num">04</span><h5>Competitive Analysis</h5><p>Competitors' strengths, weaknesses, and positioning.</p></div>
+                        <div class="element-card"><span class="num">05</span><h5>Product Positioning</h5><p>How your product fits and stands out in the market.</p></div>
+                        <div class="element-card"><span class="num">06</span><h5>Sales Strategy</h5><p>Channels, team structure, targets, enablement tools.</p></div>
+                        <div class="element-card"><span class="num">07</span><h5>Marketing Plan</h5><p>Campaigns, content, channels, and demand-gen tactics.</p></div>
+                        <div class="element-card"><span class="num">08</span><h5>Pricing Strategy</h5><p>Models balancing competitiveness with profitability.</p></div>
+                        <div class="element-card"><span class="num">09</span><h5>Distribution Plan</h5><p>Logistics of getting the product to the customer.</p></div>
+                        <div class="element-card"><span class="num">10</span><h5>Customer Support</h5><p>Post-purchase service and support infrastructure.</p></div>
+                        <div class="element-card"><span class="num">11</span><h5>Metrics &amp; KPIs</h5><p>Key performance indicators to measure effectiveness.</p></div>
+                        <div class="element-card"><span class="num">12</span><h5>Budget</h5><p>Financial plan allocating resources across components.</p></div>
+                        <div class="element-card"><span class="num">13</span><h5>Timeline</h5><p>Schedule with milestones for each execution phase.</p></div>
+                        <div class="element-card"><span class="num">14</span><h5>Risk Assessment</h5><p>Potential risks with mitigation plans.</p></div>
+                        <div class="element-card"><span class="num">15</span><h5>Feedback Loop</h5><p>Mechanisms for collecting feedback and iterating.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 2: TYPES ─── -->
+            <section class="part reveal" id="types">
+                <div class="part-header">
+                    <span class="part-number">02</span>
+                    <h2>Types of GTM Strategies</h2>
+                    <p>Different businesses require different go-to-market approaches. Choose the right motion for your context.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card card-accent">
+                        <h4>Account-Based Marketing (ABM)</h4>
+                        <p>Targeted approach where marketing and sales collaborate to create personalized buying experiences for high-value accounts. Best for high-ticket, long sales cycles.</p>
+                    </div>
+                    <div class="card card-accent">
+                        <h4>Inbound Marketing</h4>
+                        <p>Creates valuable content that attracts customers through SEO, social media, and targeted advertising. Builds trust organically over time.</p>
+                    </div>
+                    <div class="card card-accent">
+                        <h4>Sales Enablement</h4>
+                        <p>Equips the sales team with tools, content, competitive battle cards, demo scripts, and training to engage prospects effectively.</p>
+                    </div>
+                    <div class="card card-accent">
+                        <h4>Channel Partner Strategy</h4>
+                        <p>Enables distributors, resellers, or agencies through partner recruitment, onboarding, training, co-marketing, and incentive programs.</p>
+                    </div>
+                    <div class="card card-accent">
+                        <h4>Product-Led Growth (PLG)</h4>
+                        <p>Lets the product speak for itself — freemium or free trial tiers, seamless onboarding, and data-driven refinement. Slack's freemium approach is a classic example.</p>
+                    </div>
+                </div>
+
+                <!-- B2B vs B2C -->
+                <div id="b2b-b2c">
+                    <h3>B2B vs. B2C GTM Strategies</h3>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>B2B Considerations</h4>
+                            <ul class="checklist">
+                                <li><span class="check">✓</span> Longer sales cycles with multiple decision-makers</li>
+                                <li><span class="check">✓</span> Prioritizing ROI and lifetime value</li>
+                                <li><span class="check">✓</span> Deeper customer relationship building</li>
+                                <li><span class="check">✓</span> Custom packages and negotiable pricing</li>
+                                <li><span class="check">✓</span> Educational marketing: thought leadership, webinars, ABM</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>B2C Considerations</h4>
+                            <ul class="checklist">
+                                <li><span class="check">✓</span> More transactional relationships</li>
+                                <li><span class="check">✓</span> Simpler buyer decision-making processes</li>
+                                <li><span class="check">✓</span> Broader audience targeting</li>
+                                <li><span class="check">✓</span> Dynamic pricing: flash sales, individual discounts</li>
+                                <li><span class="check">✓</span> Mass advertising, influencers, loyalty programs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 3: 30-60-90 DAY PLAN ─── -->
+            <section class="part reveal" id="plan">
+                <div class="part-header">
+                    <span class="part-number">03</span>
+                    <h2>The 30-60-90 Day GTM Leadership Plan</h2>
+                    <p>A phased approach for GTM leaders rebuilding or launching a go-to-market function — immersion, re-architecture, and execution.</p>
+                </div>
+
+                <div class="phase-timeline">
+                    <div class="phase-item">
+                        <div class="phase-label">Days 1 – 30</div>
+                        <h4>IMMERSE</h4>
+                        <p><strong>People:</strong> Interview product, sales, CS, and marketing teams. Assess roles, workflows, accountability, and AI fluency. Build trust and gather internal intelligence.</p>
+                        <p><strong>Market:</strong> Analyze trends, competitors, and opportunities. Review the product roadmap and historical GTM performance. Talk to at least 10 customers.</p>
+                        <p><strong>Execution:</strong> Use the product yourself. Join customer calls. Document findings in a GTM brief.</p>
+                        <ul>
+                            <li>Spend the first 1–2 weeks as a "secret customer" — analyzing support calls, pitch calls, objection data, and win/loss data</li>
+                            <li>Form hypotheses before interviewing existing teams</li>
+                        </ul>
+                    </div>
+                    <div class="phase-item">
+                        <div class="phase-label">Days 31 – 60</div>
+                        <h4>RE-ARCHITECT</h4>
+                        <p><strong>People:</strong> Map the ideal GTM org structure (humans + AI agentic workflows). Identify gaps and work AI can automate.</p>
+                        <p><strong>Market:</strong> Conduct deep customer research. Map the full buyer journey with KPIs at each stage. Validate messaging with real prospects.</p>
+                        <p><strong>Execution:</strong> Build an AI-first GTM operating model. Revamp dashboards for ROI and ICP conversion tracking. Test offers, pricing, and positioning rapidly.</p>
+                    </div>
+                    <div class="phase-item">
+                        <div class="phase-label">Days 61 – 90</div>
+                        <h4>RUN</h4>
+                        <p><strong>People:</strong> Execute the GTM org redesign. Start weekly sprints and daily syncs.</p>
+                        <p><strong>Market:</strong> Double down on validated ICPs and channels. Launch advocacy programs to amplify early wins. Create repeatable campaign playbooks.</p>
+                        <p><strong>Execution:</strong> Finalize GTM strategy document and budget. Test growth loops. Scale what works. Cut what doesn't.</p>
+                        <ul>
+                            <li>Focus on projects that show results within 90 days</li>
+                            <li>AI-first GTM is no longer optional — it's how you win</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 4: 12-PHASE METHODOLOGY ─── -->
+            <section class="part reveal" id="methodology">
+                <div class="part-header">
+                    <span class="part-number">04</span>
+                    <h2>The 12-Phase GTM Methodology</h2>
+                    <p>An end-to-end framework covering the entire lifecycle from foundations to execution. Each phase feeds the next — break the chain anywhere and the whole system falls apart.</p>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Phase</th>
+                                <th>Focus Area</th>
+                                <th>Key Deliverables</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1</strong></td><td>GTM Foundations</td><td>OPE canvas, SWOT, value proposition, 90-day plan</td></tr>
+                            <tr><td><strong>2</strong></td><td>Collecting Intelligence</td><td>Beachhead segments, interviews, competitor analysis</td></tr>
+                            <tr><td><strong>3</strong></td><td>Validating Customers</td><td>Assumption mapping, experiments, validated ICP</td></tr>
+                            <tr><td><strong>4</strong></td><td>Building Product</td><td>JTBD, roadmap, MVP, metrics</td></tr>
+                            <tr><td><strong>5</strong></td><td>Setting Pricing</td><td>Competitive analysis, WTP research, business model</td></tr>
+                            <tr><td><strong>6</strong></td><td>Crafting Positioning</td><td>Positioning statement, UVP/USP, messaging</td></tr>
+                            <tr><td><strong>7</strong></td><td>Preparing Launch Assets</td><td>Website, demo, media kit, pitch deck</td></tr>
+                            <tr><td><strong>8</strong></td><td>Building Communication Engine</td><td>GTM motions, channels, funnel</td></tr>
+                            <tr><td><strong>9</strong></td><td>Executing Launch</td><td>Support network, launch email, events</td></tr>
+                            <tr><td><strong>10</strong></td><td>Building GTM System</td><td>Retrospective, CRM, growth sprints, SOPs</td></tr>
+                            <tr><td><strong>11</strong></td><td>Running Marketing</td><td>Narrative, content, email, paid, community</td></tr>
+                            <tr><td><strong>12</strong></td><td>Executing Sales</td><td>Sales deck, case studies, outbound, ABM</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ─── PART 5: CHECKLIST ─── -->
+            <section class="part reveal" id="checklist">
+                <div class="part-header">
+                    <span class="part-number">05</span>
+                    <h2>Go-to-Market Checklist</h2>
+                    <p>A practical, actionable checklist to ensure meticulous planning across preparation, execution, and monitoring.</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>Preparation Phase</h4>
+                        <ul class="checklist">
+                            <li><span class="check">✓</span> Define and align business goals</li>
+                            <li><span class="check">✓</span> Develop an Ideal Customer Profile (ICP)</li>
+                            <li><span class="check">✓</span> Map the buyer journey</li>
+                            <li><span class="check">✓</span> Conduct competitive analysis</li>
+                            <li><span class="check">✓</span> Assemble a cross-functional team</li>
+                            <li><span class="check">✓</span> Invest in deep customer research</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Execution Phase</h4>
+                        <ul class="checklist">
+                            <li><span class="check">✓</span> Roll out sales enablement programs</li>
+                            <li><span class="check">✓</span> Launch marketing campaigns</li>
+                            <li><span class="check">✓</span> Deploy resources efficiently</li>
+                            <li><span class="check">✓</span> Set up continuous feedback mechanisms</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Monitoring Phase</h4>
+                        <ul class="checklist">
+                            <li><span class="check">✓</span> Track CAC, conversion rates, market share</li>
+                            <li><span class="check">✓</span> Monitor retention and satisfaction</li>
+                            <li><span class="check">✓</span> Adapt based on real-time feedback</li>
+                            <li><span class="check">✓</span> Iterate on messaging and positioning</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 6: SALES PLAYBOOK ─── -->
+            <section class="part reveal" id="sales-playbook">
+                <div class="part-header">
+                    <span class="part-number">06</span>
+                    <h2>Sales Playbook as Part of GTM</h2>
+                    <p>A comprehensive guide that outlines customer personas, selling strategies, best practices, and proven tips — a critical component of any GTM strategy.</p>
+                </div>
+
+                <div class="card card-accent">
+                    <h4>What Are Sales Plays?</h4>
+                    <p>Specific strategies or steps that your sales team can follow during each stage of the selling process. Think of them as practical, easy-to-follow recipes for sales success.</p>
+                </div>
+
+                <h3>Benefits of a Sales Playbook</h3>
+                <div class="grid-2">
+                    <div class="principle">
+                        <div class="principle-num">01</div>
+                        <div class="principle-content">
+                            <h5>Training for New Reps</h5>
+                            <p>A clear, step-by-step guide that reduces ramp time for new hires.</p>
+                        </div>
+                    </div>
+                    <div class="principle">
+                        <div class="principle-num">02</div>
+                        <div class="principle-content">
+                            <h5>Reduces Guesswork</h5>
+                            <p>Ready-to-use methods so teams spend more time selling and less time improvising.</p>
+                        </div>
+                    </div>
+                    <div class="principle">
+                        <div class="principle-num">03</div>
+                        <div class="principle-content">
+                            <h5>Supports Consistency</h5>
+                            <p>Ensures all reps deliver equally high-quality customer experiences.</p>
+                        </div>
+                    </div>
+                    <div class="principle">
+                        <div class="principle-num">04</div>
+                        <div class="principle-content">
+                            <h5>Shares Success Stories</h5>
+                            <p>Everyone learns from top performers' methods and approaches.</p>
+                        </div>
+                    </div>
+                    <div class="principle">
+                        <div class="principle-num">05</div>
+                        <div class="principle-content">
+                            <h5>Accurate Forecasting</h5>
+                            <p>Standardized processes help leaders allocate resources and predict outcomes.</p>
+                        </div>
+                    </div>
+                    <div class="principle">
+                        <div class="principle-num">06</div>
+                        <div class="principle-content">
+                            <h5>Aligns GTM Teams</h5>
+                            <p>Single source of truth on personas, messaging, and positioning.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 7: EMAIL TEMPLATES ─── -->
+            <section class="part reveal" id="emails">
+                <div class="part-header">
+                    <span class="part-number">07</span>
+                    <h2>GTM Email Templates</h2>
+                    <p>15 high-performing outbound email frameworks — each designed for signal-based outreach. When you tie your message to real events, reply rates jump significantly.</p>
+                </div>
+
+                <!-- Subject Line Best Practices -->
+                <h3>Subject Line Best Practices</h3>
+                <div class="card">
+                    <ul class="checklist">
+                        <li><span class="check">✓</span> <strong>Ask a question</strong> — Shows interest in getting a reply</li>
+                        <li><span class="check">✓</span> <strong>Focus on a problem you can solve</strong> — Positions you as an expert</li>
+                        <li><span class="check">✓</span> <strong>Keep it short</strong> — No more than 41 characters</li>
+                        <li><span class="check">✓</span> <strong>Avoid first name in subject</strong> — Looks like a marketing blast</li>
+                        <li><span class="check">✓</span> <strong>Avoid clickbait</strong> — Trickery destroys trust</li>
+                        <li><span class="check">✓</span> <strong>Don't offer your product</strong> — Cold email is about relationships</li>
+                    </ul>
+                </div>
+
+                <h4>Subject Line Examples</h4>
+                <div class="subject-examples">
+                    <div class="subject-example">"Are you ready to talk?"</div>
+                    <div class="subject-example">"Saw you use X. How does it work?"</div>
+                    <div class="subject-example">"There's a more efficient way"</div>
+                    <div class="subject-example">"Any more X appointments this year?"</div>
+                </div>
+
+                <!-- EMAIL TEMPLATES -->
+                <h3 style="margin-top: 3rem;">15 Outbound Email Templates</h3>
+
+                <!-- Template 1 -->
+                <div class="email-block" id="email-1">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">01</span>
+                            <div>
+                                <div class="email-title">Hiring Trigger Email</div>
+                                <div class="email-subtitle">When a company posts a relevant job opening</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-meta">
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">When to Use</span>
+                                    <span class="email-meta-value">Target company has posted a job relevant to your solution</span>
+                                </div>
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">Signal</span>
+                                    <span class="email-meta-value">Hiring = active pain point</span>
+                                </div>
+                            </div>
+                            <div class="email-why">
+                                <strong>Why it works:</strong> Hiring signals a pain point. If they're hiring for a role your product can address, they're actively feeling the problem.
+                            </div>
+                            <div class="email-code"><span class="subject">Subject: Saw you're hiring a [Role] — quick idea</span>
+
+Hi [First Name],
+
+I noticed [Company] is looking for a [Role] — congratulations on the growth.
+
+Companies hiring for [Role] often tell us they're struggling with <span class="bracket">[specific pain point]</span>.
+
+Before you onboard someone new, would it make sense to explore how we help teams like <span class="bracket">[Company reference]</span> handle <span class="bracket">[problem]</span> without the overhead of a full-time hire?
+
+Happy to share a 5-min example if useful.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 2 -->
+                <div class="email-block" id="email-2">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">02</span>
+                            <div>
+                                <div class="email-title">Build vs. Buy Comparison</div>
+                                <div class="email-subtitle">When the target is weighing in-house vs. outsourcing</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-meta">
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">When to Use</span>
+                                    <span class="email-meta-value">Target is considering building a function in-house</span>
+                                </div>
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">Angle</span>
+                                    <span class="email-meta-value">Cost comparison with data</span>
+                                </div>
+                            </div>
+                            <div class="email-code"><span class="subject">Subject: Build vs. buy for [function]?</span>
+
+Hi [First Name],
+
+I saw [Company] is scaling [department/function]. Quick question:
+
+Have you considered the cost difference between hiring a full-time [Role] (~$<span class="bracket">[salary]</span>) vs. getting a specialist team that delivers from day one?
+
+We helped <span class="bracket">[Similar Company]</span> save <span class="bracket">[X]</span>% while getting results 3x faster.
+
+Worth a 10-minute comparison? I can send you a breakdown.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 3 -->
+                <div class="email-block" id="email-3">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">03</span>
+                            <div>
+                                <div class="email-title">New Hire + Lean Team</div>
+                                <div class="email-subtitle">When a target recently hired someone who needs tools/support</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-meta">
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">When to Use</span>
+                                    <span class="email-meta-value">Recent hire in a role that aligns with your product</span>
+                                </div>
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">Angle</span>
+                                    <span class="email-meta-value">Congratulate + offer quick-start resource</span>
+                                </div>
+                            </div>
+                            <div class="email-code"><span class="subject">Subject: Congrats on the new [Role] hire</span>
+
+Hi [First Name],
+
+I noticed <span class="bracket">[New Hire Name]</span> just joined [Company] as [Role] — great move.
+
+When teams bring on a new [Role], they often need to ramp up fast on [function]. We built [Product] exactly for this — it helped <span class="bracket">[Reference Company]</span> cut their onboarding time by <span class="bracket">[X]</span>%.
+
+Would it be helpful if I sent over a quick-start guide for <span class="bracket">[New Hire Name]</span>?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 4 -->
+                <div class="email-block" id="email-4">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">04</span>
+                            <div>
+                                <div class="email-title">Direct Offer + Strong Guarantee</div>
+                                <div class="email-subtitle">High-confidence pitch with risk reversal</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-meta">
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">When to Use</span>
+                                    <span class="email-meta-value">High confidence in your solution's ability to deliver</span>
+                                </div>
+                                <div class="email-meta-item">
+                                    <span class="email-meta-label">Angle</span>
+                                    <span class="email-meta-value">Guarantee results or they don't pay</span>
+                                </div>
+                            </div>
+                            <div class="email-code"><span class="subject">Subject: [Result] in [Timeframe] — guaranteed</span>
+
+Hi [First Name],
+
+I'll keep this brief. We guarantee <span class="bracket">[specific result]</span> for [Company] within <span class="bracket">[timeframe]</span>, or you don't pay.
+
+We've done this for <span class="bracket">[X]</span> companies in [industry], including <span class="bracket">[reference]</span>.
+
+If we don't deliver, you walk away — no cost, no hard feelings.
+
+15 minutes this week to see if it's a fit?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 5 -->
+                <div class="email-block" id="email-5">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">05</span>
+                            <div>
+                                <div class="email-title">Observation + Lead Magnet</div>
+                                <div class="email-subtitle">Share a relevant resource based on a specific observation</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: Noticed something about [Company]'s [specific area]</span>
+
+Hi [First Name],
+
+I was looking at [Company]'s [website/product/campaigns] and noticed <span class="bracket">[specific observation — e.g., "your checkout flow has 5 steps when industry average is 3"]</span>.
+
+We put together a [guide/report/audit] on [relevant topic] that addresses exactly this. Thought it might be useful:
+
+<span class="bracket">[Link to resource]</span>
+
+No strings attached — just thought of you when I saw it.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 6 -->
+                <div class="email-block" id="email-6">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">06</span>
+                            <div>
+                                <div class="email-title">Using a Competitor</div>
+                                <div class="email-subtitle">When you know the target uses a competitor's product</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: Saw you use [Competitor] — curious about your experience</span>
+
+Hi [First Name],
+
+I noticed [Company] uses [Competitor Product]. How's it working for you?
+
+We work with several teams who switched from [Competitor] to [Your Product] — they typically cite <span class="bracket">[key differentiator, e.g., "2x faster setup" or "better analytics"]</span>.
+
+Not trying to poach you — genuinely curious if [pain point] is still a challenge for your team.
+
+Would love to hear your take.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 7 -->
+                <div class="email-block" id="email-7">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">07</span>
+                            <div>
+                                <div class="email-title">Multiply Their Achievement</div>
+                                <div class="email-subtitle">Congratulate on a milestone and offer to amplify it</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: [Achievement] — and how to 2x it</span>
+
+Hi [First Name],
+
+Congrats on <span class="bracket">[specific achievement — e.g., "the Series B" / "launching in 3 new markets" / "hitting 10K users"]</span>. That's a big milestone.
+
+Companies at this stage typically hit a ceiling with [related challenge]. We helped <span class="bracket">[Reference Company]</span> navigate exactly this — they went from <span class="bracket">[before state]</span> to <span class="bracket">[after state]</span> in <span class="bracket">[timeframe]</span>.
+
+Would a 15-minute walkthrough of their approach be useful?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 8 -->
+                <div class="email-block" id="email-8">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">08</span>
+                            <div>
+                                <div class="email-title">OOO Handoff Email</div>
+                                <div class="email-subtitle">When your contact is out of office and redirects you</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: [Original Contact] suggested I reach out to you</span>
+
+Hi [First Name],
+
+I was in touch with <span class="bracket">[OOO Contact Name]</span> about [topic], and they pointed me your way since they're currently out of office.
+
+Quick context: <span class="bracket">[1-2 sentences about the value proposition]</span>
+
+Since you handle [their responsibility area], thought this might be relevant to you directly.
+
+Would a quick 10-minute call this week make sense?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 9 -->
+                <div class="email-block" id="email-9">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">09</span>
+                            <div>
+                                <div class="email-title">Quick Video Audit</div>
+                                <div class="email-subtitle">Personalized video analyzing something specific about their business</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: Made a 2-min video for [Company]</span>
+
+Hi [First Name],
+
+I recorded a quick 2-minute video walking through <span class="bracket">[specific observation about their website/product/process]</span>:
+
+<span class="bracket">[Link to personalized video]</span>
+
+I spotted <span class="bracket">[key insight]</span> that could impact [relevant metric]. It's something we see a lot in [industry].
+
+No pitch — just wanted to share the observation. Let me know if anything resonates.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 10 -->
+                <div class="email-block" id="email-10">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">10</span>
+                            <div>
+                                <div class="email-title">Observation + Insight + Solution</div>
+                                <div class="email-subtitle">Research-driven outreach with a data-backed insight</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: [Company] + [challenge] = quick idea</span>
+
+Hi [First Name],
+
+I've been following [Company]'s growth in [market/area]. One thing I noticed: <span class="bracket">[specific observation]</span>.
+
+Here's what the data tells us: <span class="bracket">[insight — e.g., "Companies in your space that address X see Y% improvement in Z"]</span>.
+
+We built [Product] specifically to solve this. <span class="bracket">[Reference Company]</span> saw <span class="bracket">[specific result]</span> within <span class="bracket">[timeframe]</span>.
+
+Would it be worth a 15-minute conversation to see if this applies to [Company]?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 11 -->
+                <div class="email-block" id="email-11">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">11</span>
+                            <div>
+                                <div class="email-title">Intent-Based Offer</div>
+                                <div class="email-subtitle">When you have signals the target is actively researching solutions</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: Still evaluating [category/solution]?</span>
+
+Hi [First Name],
+
+It looks like [Company] has been exploring [solution category] — thought I'd reach out.
+
+Rather than another sales pitch, here's a [comparison guide / ROI calculator / case study] that might help with your evaluation:
+
+<span class="bracket">[Link to resource]</span>
+
+If you're further along in the process, happy to do a quick customized demo focused on [specific use case].
+
+What would be most helpful?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 12 -->
+                <div class="email-block" id="email-12">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">12</span>
+                            <div>
+                                <div class="email-title">Recent Event + Relevancy</div>
+                                <div class="email-subtitle">Tie outreach to a relevant event or news</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: [Event] and what it means for [Company]</span>
+
+Hi [First Name],
+
+With <span class="bracket">[recent event — e.g., "the new data privacy regulation" / "your competitor's acquisition"]</span>, I imagine [Company] is thinking about [related challenge].
+
+We've been helping companies like <span class="bracket">[Reference]</span> navigate this exact situation. Here's what we're seeing work:
+
+<span class="bracket">[1-2 sentences with a specific insight]</span>
+
+Happy to share more context if it's useful. Would a quick call this week work?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 13 -->
+                <div class="email-block" id="email-13">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">13</span>
+                            <div>
+                                <div class="email-title">Market Trend Email</div>
+                                <div class="email-subtitle">Share a broader market trend relevant to their business</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: [Trend] is changing [industry] — here's what we're seeing</span>
+
+Hi [First Name],
+
+<span class="bracket">[Trend — e.g., "AI adoption in mid-market SaaS"]</span> is accelerating faster than most teams expected. Here's what the latest data shows:
+
+• <span class="bracket">[Statistic or insight #1]</span>
+• <span class="bracket">[Statistic or insight #2]</span>
+• <span class="bracket">[Statistic or insight #3]</span>
+
+Companies that act on this in the next [timeframe] are positioning themselves for [specific outcome].
+
+We put together a brief [report/playbook] on how [industry] teams are responding: <span class="bracket">[Link]</span>
+
+Would love to hear how [Company] is thinking about this.
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 14 -->
+                <div class="email-block" id="email-14">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">14</span>
+                            <div>
+                                <div class="email-title">Tech Stack Trigger</div>
+                                <div class="email-subtitle">When you know the target uses specific technologies</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: Saw you use [Tool X] + [Tool Y] — quick suggestion</span>
+
+Hi [First Name],
+
+I noticed [Company] uses [Tool X] and [Tool Y]. Smart stack.
+
+The reason I'm reaching out: teams using both of these often run into <span class="bracket">[specific friction point — e.g., "data silos between marketing and sales"]</span>.
+
+[Your Product] integrates directly with both and solves this by [key benefit]. <span class="bracket">[Reference Company]</span> cut their [metric] by <span class="bracket">[X]</span>% after connecting the three.
+
+Would a quick integration walkthrough be useful?
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 15 -->
+                <div class="email-block" id="email-15">
+                    <div class="email-header" onclick="toggleEmail(this)">
+                        <div class="email-header-left">
+                            <span class="email-num">15</span>
+                            <div>
+                                <div class="email-title">Strategic Question</div>
+                                <div class="email-subtitle">Open dialogue with a thought-provoking question</div>
+                            </div>
+                        </div>
+                        <span class="email-toggle">▼</span>
+                    </div>
+                    <div class="email-body">
+                        <div class="email-body-inner">
+                            <div class="email-code"><span class="subject">Subject: How is [Company] handling [specific challenge]?</span>
+
+Hi [First Name],
+
+Quick question: How is your team currently handling <span class="bracket">[specific challenge — e.g., "lead scoring at scale" / "customer onboarding across multiple markets"]</span>?
+
+I ask because we've been working with <span class="bracket">[X]</span> companies in [industry] on exactly this, and the approaches vary wildly. The most effective ones share a common pattern:
+
+<span class="bracket">[One sentence with a high-level insight]</span>
+
+Curious whether this resonates with what you're seeing at [Company].
+
+Best,
+[Your Name]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTAs and P.S. Lines -->
+                <h3 style="margin-top: 3rem;">High-Performing CTAs</h3>
+                <div class="cta-list">
+                    <div class="cta-item">"Worth a 10-minute call this week?"</div>
+                    <div class="cta-item">"Happy to send over a quick breakdown — interested?"</div>
+                    <div class="cta-item">"Would it help if I recorded a 2-min video walking through this?"</div>
+                    <div class="cta-item">"Can I send you the [resource] we used for [Reference Company]?"</div>
+                    <div class="cta-item">"What would be most helpful for you right now?"</div>
+                    <div class="cta-item">"Worth a 15-minute comparison? I can show you the numbers."</div>
+                </div>
+
+                <h3>P.S. Lines That Drive Replies</h3>
+                <div class="cta-list">
+                    <div class="cta-item">P.S. If the timing isn't right, just let me know — I'll follow up in Q[X].</div>
+                    <div class="cta-item">P.S. I also noticed [secondary observation] — happy to share more on that.</div>
+                    <div class="cta-item">P.S. No worries if this isn't relevant — just thought of [Company] when I saw [trigger].</div>
+                    <div class="cta-item">P.S. I'll be in [their city] on [date] if an in-person coffee is easier.</div>
+                    <div class="cta-item">P.S. If you're not the right person, could you point me to whoever handles [function]?</div>
+                </div>
+            </section>
+
+            <!-- ─── PART 8: WRITING PRINCIPLES ─── -->
+            <section class="part reveal" id="writing-principles">
+                <div class="part-header">
+                    <span class="part-number">08</span>
+                    <h2>Outbound Email Writing Principles</h2>
+                    <p>Five core principles for writing effective GTM outbound emails that get replies.</p>
+                </div>
+
+                <div class="principle">
+                    <div class="principle-num">01</div>
+                    <div class="principle-content">
+                        <h5>Find Your "Why"</h5>
+                        <p>Be purposeful about every outbound email. Ask yourself: "Why am I reaching out to this person?" If there's no concrete reason, don't waste their time or yours.</p>
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-num">02</div>
+                    <div class="principle-content">
+                        <h5>Write About Them (Not You)</h5>
+                        <p>Use empathy. Research their industry and business, then include relevant discoveries in the email. Be personal and friendly — not stalkerish.</p>
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-num">03</div>
+                    <div class="principle-content">
+                        <h5>Prove Value to Them</h5>
+                        <p>Don't lure them in with features or percentages. Your goal is to offer value, not make a sale (yet).</p>
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-num">04</div>
+                    <div class="principle-content">
+                        <h5>Don't Presume to Know What's Right</h5>
+                        <p>Be open-minded and ask questions about their business. Show unique information you found, but don't presume to understand their needs before you've talked with them.</p>
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-num">05</div>
+                    <div class="principle-content">
+                        <h5>Clear, Low-Friction CTA</h5>
+                        <p>The best CTAs ask for a small commitment: a 10-minute call, a reply, permission to send a resource. Avoid asking for a 60-minute demo in a cold email.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ─── PART 9: METRICS ─── -->
+            <section class="part reveal" id="metrics">
+                <div class="part-header">
+                    <span class="part-number">09</span>
+                    <h2>Measuring GTM Success — Key Metrics</h2>
+                    <p>Track these KPIs to measure the effectiveness of your go-to-market strategy.</p>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Metric</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Acquisition</strong></td><td>Customer Acquisition Cost (CAC)</td><td>Total cost to acquire one customer</td></tr>
+                            <tr><td><strong>Acquisition</strong></td><td>Lead-to-Customer Conversion Rate</td><td>Percentage of leads that become customers</td></tr>
+                            <tr><td><strong>Revenue</strong></td><td>Average Revenue Per User (ARPU)</td><td>Revenue generated per customer</td></tr>
+                            <tr><td><strong>Revenue</strong></td><td>Monthly Recurring Revenue (MRR)</td><td>Predictable monthly revenue</td></tr>
+                            <tr><td><strong>Retention</strong></td><td>Churn Rate</td><td>Percentage of customers lost over a period</td></tr>
+                            <tr><td><strong>Retention</strong></td><td>Customer Lifetime Value (CLV)</td><td>Total revenue expected from a customer</td></tr>
+                            <tr><td><strong>Market</strong></td><td>Market Share</td><td>Percentage of the market you capture</td></tr>
+                            <tr><td><strong>Market</strong></td><td>Brand Awareness</td><td>Surveys, search volume, social mentions</td></tr>
+                            <tr><td><strong>Sales</strong></td><td>Sales Cycle Length</td><td>Average time from first contact to closed deal</td></tr>
+                            <tr><td><strong>Sales</strong></td><td>Win Rate</td><td>Percentage of opportunities that close successfully</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ─── PART 10: STRATEGY TEMPLATE ─── -->
+            <section class="part reveal" id="template">
+                <div class="part-header">
+                    <span class="part-number">10</span>
+                    <h2>GTM Strategy Template</h2>
+                    <p>A fill-in-the-blank template to document your complete go-to-market strategy.</p>
+                </div>
+
+                <div class="template-block"><span class="sep">================================================================</span>
+<span class="key">GO-TO-MARKET STRATEGY DOCUMENT</span>
+<span class="sep">================================================================</span>
+
+<span class="key">1. EXECUTIVE SUMMARY</span>
+   Product/Service: _________________________________
+   Launch Date: _____________________________________
+   Target Market: ___________________________________
+   Revenue Goal: ____________________________________
+
+<span class="key">2. MARKET ANALYSIS</span>
+   Market Size (TAM): _______________________________
+   Market Size (SAM): _______________________________
+   Market Size (SOM): _______________________________
+   Key Trends: ______________________________________
+   Growth Rate: _____________________________________
+
+<span class="key">3. TARGET CUSTOMER</span>
+   Ideal Customer Profile: ___________________________
+   Demographics: ____________________________________
+   Pain Points: _____________________________________
+   Buying Behavior: _________________________________
+   Willingness to Pay: ______________________________
+
+<span class="key">4. COMPETITIVE LANDSCAPE</span>
+   Competitor 1: _____________ Strengths: ____________
+                                  Weaknesses: _________
+   Competitor 2: _____________ Strengths: ____________
+                                  Weaknesses: _________
+   Your Differentiator: ______________________________
+
+<span class="key">5. VALUE PROPOSITION</span>
+   Core Message: ____________________________________
+   Key Benefits: ____________________________________
+   Proof Points: ____________________________________
+
+<span class="key">6. POSITIONING</span>
+   Positioning Statement: ____________________________
+   Category: ________________________________________
+   Alternative: _____________________________________
+
+<span class="key">7. PRICING STRATEGY</span>
+   Model: ___________________________________________
+   Price Point: _____________________________________
+   Packaging: _______________________________________
+
+<span class="key">8. DISTRIBUTION</span>
+   Primary Channel: _________________________________
+   Secondary Channel: _______________________________
+   Partners: ________________________________________
+
+<span class="key">9. MARKETING PLAN</span>
+   Channels: ________________________________________
+   Campaigns: _______________________________________
+   Content Strategy: ________________________________
+   Budget: __________________________________________
+
+<span class="key">10. SALES STRATEGY</span>
+    Sales Motion: ___________________________________
+    Team Structure: _________________________________
+    Enablement Tools: _______________________________
+    Targets: ________________________________________
+
+<span class="key">11. LAUNCH TIMELINE</span>
+    Phase 1 (Pre-Launch): ___________ to _____________
+    Phase 2 (Launch): _____________ to _______________
+    Phase 3 (Post-Launch): ___________ to ____________
+
+<span class="key">12. SUCCESS METRICS</span>
+    KPI 1: _________________ Target: ________________
+    KPI 2: _________________ Target: ________________
+    KPI 3: _________________ Target: ________________
+
+<span class="key">13. BUDGET</span>
+    Marketing: _______________________________________
+    Sales: ___________________________________________
+    Support: _________________________________________
+    Total: ___________________________________________
+
+<span class="key">14. RISK ASSESSMENT</span>
+    Risk 1: _________________ Mitigation: ____________
+    Risk 2: _________________ Mitigation: ____________
+
+<span class="sep">================================================================</span></div>
+            </section>
+
+            <!-- ─── PART 11: KEY TAKEAWAYS ─── -->
+            <section class="part reveal" id="takeaways">
+                <div class="part-header">
+                    <span class="part-number">11</span>
+                    <h2>Key Takeaways</h2>
+                    <p>The principles that separate GTM strategies that work from those that don't.</p>
+                </div>
+
+                <div class="takeaway-grid">
+                    <div class="takeaway">
+                        <span class="tk-num">01</span>
+                        <h5>Precision Over Volume</h5>
+                        <p>AI-powered intelligence to diagnose and engage at scale. Fewer sends, more relevance, more signal-driven timing.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">02</span>
+                        <h5>Trust as Currency</h5>
+                        <p>Delivering measurable, verifiable value before asking for commitment.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">03</span>
+                        <h5>Product-Market Fit Rigor</h5>
+                        <p>Deeply understanding the problem, the audience, and the competitive landscape before you scale.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">04</span>
+                        <h5>Channel Alignment</h5>
+                        <p>Choosing the right mix of ABM, inbound, PLG, or partner strategies for your specific context.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">05</span>
+                        <h5>Signal-Based Outreach</h5>
+                        <p>Connecting every outbound message to real events at the target company dramatically increases reply rates.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">06</span>
+                        <h5>Continuous Adaptation</h5>
+                        <p>What worked yesterday may not work tomorrow. Refine your GTM as market conditions evolve.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">07</span>
+                        <h5>Unbroken Chain</h5>
+                        <p>Competitor analysis feeds positioning, positioning feeds the pitch deck, the pitch deck feeds the sales process. Don't break the chain.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">08</span>
+                        <h5>AI-First GTM</h5>
+                        <p>AI-first GTM is no longer optional. Every phase of the methodology can be enhanced with AI-powered workflows.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">09</span>
+                        <h5>Data as a Moat</h5>
+                        <p>Building proprietary feedback loops that compound your competitive advantage over time.</p>
+                    </div>
+                    <div class="takeaway">
+                        <span class="tk-num">10</span>
+                        <h5>Systems, Not Events</h5>
+                        <p>Treat launches as evolving, intelligent systems that learn, adapt, and compound value with every market interaction.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Go-to-Market Strategy</h3>
+            <p>This playbook contains: Complete GTM framework &bull; 15 email templates &bull; Subject line best practices &bull; CTAs &amp; P.S. lines &bull; 30-60-90 day plan &bull; 12-phase methodology &bull; Sales playbook &bull; Strategy template &bull; Key metrics</p>
+            <div class="footer-meta">GTM Playbook 2026 &mdash; All Sections Included</div>
+        </div>
+    </footer>
+
+    <!-- ═══════ JAVASCRIPT ═══════ -->
+    <script>
+        // Toggle email templates
+        function toggleEmail(header) {
+            const block = header.closest('.email-block');
+            block.classList.toggle('open');
+        }
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Active sidebar link
+        const sidebarLinks = document.querySelectorAll('.sidebar nav a');
+        const sections = [];
+        sidebarLinks.forEach(link => {
+            const id = link.getAttribute('href').substring(1);
+            const section = document.getElementById(id);
+            if (section) sections.push({ id, el: section, link });
+        });
+
+        function updateActiveLink() {
+            let current = '';
+            for (const s of sections) {
+                const rect = s.el.getBoundingClientRect();
+                if (rect.top <= 120) current = s.id;
+            }
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar nav a[href="#${current}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+
+        window.addEventListener('scroll', updateActiveLink, { passive: true });
+        updateActiveLink();
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Close sidebar on link click (mobile)
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Checklist toggle
+        document.querySelectorAll('.checklist li').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('checked');
+            });
+        });
+    </script>
+</body>
+</html>
