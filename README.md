@@ -3,7 +3,7 @@
 Below is a comprehensive, document-style resource you can copy into Word, Google Docs, or any PDF converter. It covers the full GTM framework, execution phases, and includes ready-to-use email templates.
 
 ---
-
+![alt text](image.png)
 ---
 
 # PART 1: FOUNDATIONS OF A GO-TO-MARKET STRATEGY
