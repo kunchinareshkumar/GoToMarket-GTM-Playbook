@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Playbook — Visual Diagrams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #08080c;
+            --surface: #10101a;
+            --elevated: #18182a;
+            --card: #1c1c30;
+            --accent: #d4a843;
+            --accent-dim: #a07c2e;
+            --accent-glow: rgba(212,168,67,0.1);
+            --accent-glow2: rgba(212,168,67,0.06);
+            --text: #f0ece4;
+            --text2: #b8b2a6;
+            --muted: #5e5a52;
+            --border: rgba(212,168,67,0.1);
+            --border2: rgba(212,168,67,0.2);
+            --blue: #5b9bd5;
+            --green: #5cb87a;
+            --red: #d45b5b;
+            --purple: #9b7dd4;
+            --teal: #4dbdbd;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 15% 20%, rgba(212,168,67,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 80%, rgba(91,155,213,0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(155,125,212,0.02) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        ::selection { background: var(--accent); color: var(--bg); }
+
+        /* ─── NAV ─── */
+        .topnav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(8,8,12,0.92);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+        .topnav-inner {
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between; height: 60px;
+        }
+        .topnav-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900; font-size: 1rem; color: var(--accent);
+        }
+        .topnav-brand span { color: var(--muted); font-weight: 400; font-size: 0.8rem; margin-left: 0.4rem; }
+        .topnav-links {
+            display: flex; gap: 0.2rem; list-style: none;
+        }
+        .topnav-links a {
+            font-family: 'DM Mono', monospace; font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--muted); padding: 0.4rem 0.65rem; border-radius: 4px;
+            text-decoration: none; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .topnav-links a:hover { color: var(--accent); background: var(--accent-glow); }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 70vh; display: flex; align-items: center; justify-content: center;
+            padding: 8rem 2rem 4rem; text-align: center; position: relative;
+        }
+        .hero-label {
+            font-family: 'DM Mono', monospace; font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);
+            margin-bottom: 1.5rem;
+            opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif; font-weight: 900;
+            font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 1rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+        .hero h1 em { font-style: italic; color: var(--accent); }
+        .hero p {
+            font-size: 1.05rem; color: var(--text2); max-width: 650px; margin: 0 auto;
+            opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── MAIN ─── */
+        .main { max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+        /* ─── SECTION ─── */
+        .section { margin-bottom: 5rem; }
+        .section-head {
+            position: relative; padding: 3rem 0 2rem; margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-num {
+            font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900;
+            color: var(--accent); opacity: 0.1; position: absolute; top: 0; left: 0; line-height: 1;
+        }
+        .section-head h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700;
+            position: relative; z-index: 1;
+        }
+        .section-head p { color: var(--text2); margin-top: 0.5rem; max-width: 700px; font-size: 0.95rem; }
+
+        /* ─── DIAGRAM CONTAINER ─── */
+        .diagram-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+        .diagram-wrap::before {
+            content: '';
+            position: absolute; inset: 0; border-radius: 16px;
+            background: radial-gradient(ellipse at 50% 0%, var(--accent-glow2), transparent 60%);
+            pointer-events: none;
+        }
+        .diagram-wrap svg {
+            display: block; margin: 0 auto;
+            max-width: 100%; height: auto;
+        }
+        .diagram-title {
+            font-family: 'DM Mono', monospace; font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted);
+            margin-bottom: 1.5rem; text-align: center;
+        }
+
+        /* ─── SVG STYLES ─── */
+        .node-rect {
+            rx: 10; ry: 10;
+            stroke-width: 1.5;
+            transition: all 0.3s ease;
+        }
+        .node-rect:hover { filter: brightness(1.2); }
+        .node-text {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            fill: var(--text); text-anchor: middle; dominant-baseline: central;
+            pointer-events: none;
+        }
+        .node-text-sm {
+            font-family: 'DM Mono', monospace; font-size: 9px;
+            fill: var(--text2); text-anchor: middle; dominant-baseline: central;
+            pointer-events: none;
+        }
+        .node-text-lg {
+            font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700;
+            fill: var(--text); text-anchor: middle; dominant-baseline: central;
+            pointer-events: none;
+        }
+        .arrow-line {
+            stroke-width: 1.5; fill: none;
+            marker-end: url(#arrowhead);
+        }
+        .arrow-dash {
+            stroke-width: 1; fill: none; stroke-dasharray: 5,4;
+            marker-end: url(#arrowhead-sm);
+        }
+        .label-text {
+            font-family: 'DM Mono', monospace; font-size: 9px;
+            fill: var(--muted); text-anchor: middle;
+        }
+
+        /* ─── REVEAL ─── */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .topnav-links { display: none; }
+            .diagram-wrap { padding: 1.5rem 1rem; }
+            .section-head h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="topnav">
+    <div class="topnav-inner">
+        <div class="topnav-brand">GTM DIAGRAMS <span>Visual Playbook</span></div>
+        <ul class="topnav-links">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#five-pillars">Pillars</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#phases">12 Phases</a></li>
+            <li><a href="#decision">Decision</a></li>
+            <li><a href="#funnel">Funnel</a></li>
+            <li><a href="#email-flow">Email Flow</a></li>
+            <li><a href="#metrics">Metrics</a></li>
+            <li><a href="#beachhead">Beachhead</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div>
+        <div class="hero-label">Visual Intelligence</div>
+        <h1>GTM Playbook<br><em>Diagrams</em></h1>
+        <p>Flow diagrams, decision trees, timelines, and strategic frameworks to visualize every layer of the Go-to-Market methodology.</p>
+    </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+    <!-- ▬▬▬▬ 1. GTM OVERVIEW FLOW ▬▬▬▬ -->
+    <section class="section reveal" id="overview">
+        <div class="section-head">
+            <span class="section-num">01</span>
+            <h2>GTM Strategy — Complete Flow</h2>
+            <p>End-to-end flow from market research to revenue, showing how every component connects in sequence.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">End-to-End Go-to-Market Flow</div>
+            <svg viewBox="0 0 1100 700" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#d4a843" opacity="0.7"/>
+                    </marker>
+                    <marker id="arrowhead-sm" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" fill="#5e5a52" opacity="0.6"/>
+                    </marker>
+                    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#5b9bd5" opacity="0.7"/>
+                    </marker>
+                    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#5cb87a" opacity="0.7"/>
+                    </marker>
+                    <linearGradient id="grad-gold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#d4a843" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#a07c2e" stop-opacity="0.08"/>
+                    </linearGradient>
+                    <linearGradient id="grad-blue" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#5b9bd5" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#3a7ab8" stop-opacity="0.08"/>
+                    </linearGradient>
+                    <linearGradient id="grad-green" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#5cb87a" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#3a9a5a" stop-opacity="0.08"/>
+                    </linearGradient>
+                    <linearGradient id="grad-purple" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#9b7dd4" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#7a5cb8" stop-opacity="0.08"/>
+                    </linearGradient>
+                    <linearGradient id="grad-red" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#d45b5b" stop-opacity="0.2"/>
+                        <stop offset="100%" stop-color="#b83a3a" stop-opacity="0.08"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- Row 1: Market Research -->
+                <rect x="400" y="20" width="300" height="60" class="node-rect" fill="url(#grad-gold)" stroke="#d4a843"/>
+                <text x="550" y="42" class="node-text-lg">MARKET RESEARCH</text>
+                <text x="550" y="62" class="node-text-sm">TAM · SAM · SOM · Trends</text>
+
+                <line x1="550" y1="80" x2="550" y2="110" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Row 2: Two branches -->
+                <rect x="80" y="110" width="220" height="55" class="node-rect" fill="url(#grad-blue)" stroke="#5b9bd5"/>
+                <text x="190" y="132" class="node-text-lg">ICP &amp; PERSONAS</text>
+                <text x="190" y="150" class="node-text-sm">Demographics · Pain Points</text>
+
+                <rect x="800" y="110" width="220" height="55" class="node-rect" fill="url(#grad-blue)" stroke="#5b9bd5"/>
+                <text x="910" y="132" class="node-text-lg">COMPETITIVE ANALYSIS</text>
+                <text x="910" y="150" class="node-text-sm">Strengths · Weaknesses · Gaps</text>
+
+                <line x1="440" y1="50" x2="190" y2="110" class="arrow-dash" stroke="#5b9bd5"/>
+                <line x1="660" y1="50" x2="910" y2="110" class="arrow-dash" stroke="#5b9bd5"/>
+
+                <!-- Merge to Value Prop -->
+                <line x1="190" y1="165" x2="400" y2="210" class="arrow-line" stroke="#5b9bd5"/>
+                <line x1="910" y1="165" x2="700" y2="210" class="arrow-line" stroke="#5b9bd5"/>
+
+                <!-- Row 3: Value Proposition -->
+                <rect x="350" y="200" width="400" height="60" class="node-rect" fill="url(#grad-gold)" stroke="#d4a843"/>
+                <text x="550" y="222" class="node-text-lg">VALUE PROPOSITION &amp; POSITIONING</text>
+                <text x="550" y="242" class="node-text-sm">UVP · USP · Messaging Framework</text>
+
+                <line x1="550" y1="260" x2="550" y2="295" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Row 4: Three branches -->
+                <rect x="50" y="295" width="200" height="55" class="node-rect" fill="url(#grad-purple)" stroke="#9b7dd4"/>
+                <text x="150" y="317" class="node-text-lg">PRICING</text>
+                <text x="150" y="335" class="node-text-sm">Model · Packaging · WTP</text>
+
+                <rect x="400" y="295" width="300" height="55" class="node-rect" fill="url(#grad-green)" stroke="#5cb87a"/>
+                <text x="550" y="317" class="node-text-lg">MARKETING PLAN</text>
+                <text x="550" y="335" class="node-text-sm">Content · Campaigns · Channels</text>
+
+                <rect x="850" y="295" width="200" height="55" class="node-rect" fill="url(#grad-blue)" stroke="#5b9bd5"/>
+                <text x="950" y="317" class="node-text-lg">SALES STRATEGY</text>
+                <text x="950" y="335" class="node-text-sm">Motion · Team · Enablement</text>
+
+                <line x1="450" y1="260" x2="150" y2="295" class="arrow-dash" stroke="#9b7dd4"/>
+                <line x1="550" y1="260" x2="550" y2="295" class="arrow-dash" stroke="#5cb87a"/>
+                <line x1="650" y1="260" x2="950" y2="295" class="arrow-dash" stroke="#5b9bd5"/>
+
+                <!-- Row 5: Launch Assets -->
+                <line x1="150" y1="350" x2="400" y2="400" class="arrow-line" stroke="#d4a843"/>
+                <line x1="550" y1="350" x2="550" y2="400" class="arrow-line" stroke="#d4a843"/>
+                <line x1="950" y1="350" x2="700" y2="400" class="arrow-line" stroke="#d4a843"/>
+
+                <rect x="300" y="400" width="500" height="60" class="node-rect" fill="url(#grad-gold)" stroke="#d4a843"/>
+                <text x="550" y="422" class="node-text-lg">LAUNCH ASSETS &amp; COMMUNICATION ENGINE</text>
+                <text x="550" y="442" class="node-text-sm">Website · Demo · Pitch Deck · Media Kit · GTM Motions</text>
+
+                <line x1="550" y1="460" x2="550" y2="495" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Row 6: LAUNCH -->
+                <rect x="400" y="495" width="300" height="70" rx="35" ry="35" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="523" class="node-text-lg" style="font-size:16px;">🚀 PRODUCT LAUNCH</text>
+                <text x="550" y="545" class="node-text-sm">Launch Event · Email Sequences · PR</text>
+
+                <line x1="550" y1="565" x2="550" y2="600" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Row 7: Post-Launch -->
+                <rect x="120" y="600" width="240" height="55" class="node-rect" fill="url(#grad-green)" stroke="#5cb87a"/>
+                <text x="240" y="622" class="node-text-lg">GTM SYSTEM</text>
+                <text x="240" y="640" class="node-text-sm">CRM · Sprints · SOPs · Feedback</text>
+
+                <rect x="430" y="600" width="240" height="55" class="node-rect" fill="url(#grad-red)" stroke="#d45b5b"/>
+                <text x="550" y="622" class="node-text-lg">MEASURE &amp; ITERATE</text>
+                <text x="550" y="640" class="node-text-sm">KPIs · CAC · MRR · Churn</text>
+
+                <rect x="740" y="600" width="240" height="55" class="node-rect" fill="url(#grad-blue)" stroke="#5b9bd5"/>
+                <text x="860" y="622" class="node-text-lg">SCALE &amp; GROW</text>
+                <text x="860" y="640" class="node-text-sm">Outbound · ABM · Advocacy</text>
+
+                <line x1="430" y1="530" x2="240" y2="600" class="arrow-dash" stroke="#5cb87a"/>
+                <line x1="550" y1="565" x2="550" y2="600" class="arrow-dash" stroke="#d45b5b"/>
+                <line x1="670" y1="530" x2="860" y2="600" class="arrow-dash" stroke="#5b9bd5"/>
+
+                <!-- Feedback loop -->
+                <path d="M 860 655 Q 860 685 550 685 Q 240 685 240 655" class="arrow-dash" stroke="#d4a843" fill="none" stroke-dasharray="6,4"/>
+                <text x="550" y="695" class="label-text" fill="#d4a843">FEEDBACK LOOP — CONTINUOUS ITERATION</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 2. FIVE PILLARS ▬▬▬▬ -->
+    <section class="section reveal" id="five-pillars">
+        <div class="section-head">
+            <span class="section-num">02</span>
+            <h2>Five Essential GTM Pillars</h2>
+            <p>Every GTM strategy rests on these five interconnected pillars. Remove one and the structure collapses.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Pentagon Model — Five Pillars</div>
+            <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg">
+                <!-- Center circle -->
+                <circle cx="400" cy="330" r="85" fill="none" stroke="#d4a843" stroke-width="2" opacity="0.3"/>
+                <circle cx="400" cy="330" r="70" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="400" y="318" class="node-text-lg" style="font-size:14px;">GTM</text>
+                <text x="400" y="340" class="node-text-lg" style="font-size:14px;">STRATEGY</text>
+
+                <!-- Pentagon lines connecting nodes -->
+                <polygon points="400,80 660,220 580,520 220,520 140,220" fill="none" stroke="#d4a843" stroke-width="1" opacity="0.15"/>
+
+                <!-- Node 1: Top - Market Definition -->
+                <line x1="400" y1="145" x2="400" y2="250" stroke="#d4a843" stroke-width="1" opacity="0.3"/>
+                <circle cx="400" cy="100" r="50" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="400" y="92" class="node-text" style="font-size:10px;">MARKET</text>
+                <text x="400" y="106" class="node-text" style="font-size:10px;">DEFINITION</text>
+                <text x="400" y="70" class="node-text-sm">TAM · SAM · SOM</text>
+
+                <!-- Node 2: Top-Right - Target Customers -->
+                <line x1="620" y1="230" x2="480" y2="300" stroke="#5b9bd5" stroke-width="1" opacity="0.3"/>
+                <circle cx="640" cy="240" r="50" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="640" y="232" class="node-text" style="font-size:10px;">TARGET</text>
+                <text x="640" y="246" class="node-text" style="font-size:10px;">CUSTOMERS</text>
+                <text x="640" y="210" class="node-text-sm">ICP · Personas · Pain</text>
+
+                <!-- Node 3: Bottom-Right - Distribution -->
+                <line x1="560" y1="500" x2="460" y2="380" stroke="#5cb87a" stroke-width="1" opacity="0.3"/>
+                <circle cx="570" cy="510" r="50" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="570" y="502" class="node-text" style="font-size:10px;">DISTRIBUTION</text>
+                <text x="570" y="516" class="node-text" style="font-size:10px;">MODEL</text>
+                <text x="570" y="545" class="node-text-sm">Direct · Channel · Hybrid</text>
+
+                <!-- Node 4: Bottom-Left - Messaging -->
+                <line x1="240" y1="500" x2="340" y2="380" stroke="#9b7dd4" stroke-width="1" opacity="0.3"/>
+                <circle cx="230" cy="510" r="50" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="230" y="502" class="node-text" style="font-size:10px;">PRODUCT</text>
+                <text x="230" y="516" class="node-text" style="font-size:10px;">MESSAGING</text>
+                <text x="230" y="545" class="node-text-sm">UVP · USP · Positioning</text>
+
+                <!-- Node 5: Top-Left - Pricing -->
+                <line x1="180" y1="230" x2="320" y2="300" stroke="#d45b5b" stroke-width="1" opacity="0.3"/>
+                <circle cx="160" cy="240" r="50" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5"/>
+                <text x="160" y="232" class="node-text" style="font-size:10px;">PRICING</text>
+                <text x="160" y="246" class="node-text" style="font-size:10px;">STRATEGY</text>
+                <text x="160" y="210" class="node-text-sm">Model · WTP · Margin</text>
+
+                <!-- Labels at bottom -->
+                <text x="400" y="640" class="label-text" style="font-size:11px;">All five pillars must align — a weakness in any one area undermines the entire strategy</text>
+                <text x="400" y="660" class="label-text">Research shows 80% of new products fail — usually due to misalignment across these pillars</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 3. 30-60-90 TIMELINE ▬▬▬▬ -->
+    <section class="section reveal" id="timeline">
+        <div class="section-head">
+            <span class="section-num">03</span>
+            <h2>30-60-90 Day Leadership Plan</h2>
+            <p>Three phases — Immersion, Re-Architecture, and Execution — for GTM leaders rebuilding or launching a function.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Three-Phase GTM Leadership Timeline</div>
+            <svg viewBox="0 0 1100 550" xmlns="http://www.w3.org/2000/svg">
+                <!-- Main timeline axis -->
+                <line x1="80" y1="200" x2="1020" y2="200" stroke="#d4a843" stroke-width="2" opacity="0.3"/>
+                <circle cx="80" cy="200" r="6" fill="#d4a843"/>
+                <circle cx="420" cy="200" r="6" fill="#d4a843"/>
+                <circle cx="740" cy="200" r="6" fill="#d4a843"/>
+                <circle cx="1020" cy="200" r="6" fill="#d4a843"/>
+
+                <!-- Day markers -->
+                <text x="80" y="225" class="label-text" style="font-size:11px;">Day 1</text>
+                <text x="410" y="225" class="label-text" style="font-size:11px;">Day 30</text>
+                <text x="730" y="225" class="label-text" style="font-size:11px;">Day 60</text>
+                <text x="1010" y="225" class="label-text" style="font-size:11px;">Day 90</text>
+
+                <!-- Phase 1: IMMERSE -->
+                <rect x="80" y="40" width="310" height="140" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="235" y="70" class="node-text-lg" style="font-size:15px; fill:#d4a843;">IMMERSE</text>
+                <text x="235" y="95" class="node-text-sm">Interview all teams · Use the product</text>
+                <text x="235" y="112" class="node-text-sm">Analyze support &amp; pitch calls</text>
+                <text x="235" y="129" class="node-text-sm">Talk to 10+ customers</text>
+                <text x="235" y="146" class="node-text-sm">Document findings in GTM brief</text>
+                <text x="235" y="168" class="label-text" fill="#d4a843">PEOPLE · MARKET · EXECUTION</text>
+
+                <!-- Phase 2: RE-ARCHITECT -->
+                <rect x="420" y="40" width="290" height="140" rx="12" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="565" y="70" class="node-text-lg" style="font-size:15px; fill:#5b9bd5;">RE-ARCHITECT</text>
+                <text x="565" y="95" class="node-text-sm">Map ideal GTM org structure</text>
+                <text x="565" y="112" class="node-text-sm">Deep customer research</text>
+                <text x="565" y="129" class="node-text-sm">Build AI-first GTM operating model</text>
+                <text x="565" y="146" class="node-text-sm">Test offers, pricing, positioning</text>
+                <text x="565" y="168" class="label-text" fill="#5b9bd5">HUMANS + AI WORKFLOWS</text>
+
+                <!-- Phase 3: RUN -->
+                <rect x="740" y="40" width="280" height="140" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="880" y="70" class="node-text-lg" style="font-size:15px; fill:#5cb87a;">RUN</text>
+                <text x="880" y="95" class="node-text-sm">Execute GTM org redesign</text>
+                <text x="880" y="112" class="node-text-sm">Double down on validated ICPs</text>
+                <text x="880" y="129" class="node-text-sm">Launch advocacy programs</text>
+                <text x="880" y="146" class="node-text-sm">Scale what works · Cut what doesn't</text>
+                <text x="880" y="168" class="label-text" fill="#5cb87a">WEEKLY SPRINTS · DAILY SYNCS</text>
+
+                <!-- Arrows from phases to timeline -->
+                <line x1="235" y1="180" x2="235" y2="194" stroke="#d4a843" stroke-width="1.5"/>
+                <line x1="565" y1="180" x2="565" y2="194" stroke="#5b9bd5" stroke-width="1.5"/>
+                <line x1="880" y1="180" x2="880" y2="194" stroke="#5cb87a" stroke-width="1.5"/>
+
+                <!-- Bottom: Key activities -->
+                <!-- Activity boxes under timeline -->
+                <rect x="100" y="260" width="280" height="100" rx="10" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="240" y="285" class="node-text" style="fill:#d4a843;">KEY ACTIVITIES</text>
+                <text x="240" y="305" class="node-text-sm">→ Secret customer analysis</text>
+                <text x="240" y="320" class="node-text-sm">→ Win/loss data review</text>
+                <text x="240" y="335" class="node-text-sm">→ Hypothesis formation</text>
+                <text x="240" y="350" class="node-text-sm">→ Cross-functional interviews</text>
+
+                <rect x="410" y="260" width="280" height="100" rx="10" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="550" y="285" class="node-text" style="fill:#5b9bd5;">KEY ACTIVITIES</text>
+                <text x="550" y="305" class="node-text-sm">→ Buyer journey mapping</text>
+                <text x="550" y="320" class="node-text-sm">→ Messaging validation</text>
+                <text x="550" y="335" class="node-text-sm">→ Dashboard revamp</text>
+                <text x="550" y="350" class="node-text-sm">→ AI automation identification</text>
+
+                <rect x="720" y="260" width="280" height="100" rx="10" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="860" y="285" class="node-text" style="fill:#5cb87a;">KEY ACTIVITIES</text>
+                <text x="860" y="305" class="node-text-sm">→ Campaign playbooks</text>
+                <text x="860" y="320" class="node-text-sm">→ Growth loop testing</text>
+                <text x="860" y="335" class="node-text-sm">→ Finalize budget &amp; strategy</text>
+                <text x="860" y="350" class="node-text-sm">→ 90-day results assessment</text>
+
+                <!-- Progress bar -->
+                <rect x="80" y="410" width="940" height="8" rx="4" fill="var(--elevated)" opacity="0.5"/>
+                <rect x="80" y="410" width="313" height="8" rx="4" fill="#d4a843" opacity="0.6"/>
+                <rect x="393" y="410" width="313" height="8" rx="4" fill="#5b9bd5" opacity="0.6"/>
+                <rect x="706" y="410" width="314" height="8" rx="4" fill="#5cb87a" opacity="0.6"/>
+
+                <text x="235" y="440" class="label-text" fill="#d4a843">LEARN</text>
+                <text x="550" y="440" class="label-text" fill="#5b9bd5">DESIGN</text>
+                <text x="880" y="440" class="label-text" fill="#5cb87a">EXECUTE</text>
+
+                <!-- Bottom note -->
+                <text x="550" y="490" class="label-text" style="font-size:11px;">Focus on projects that show results within 90 days. AI-first GTM is no longer optional.</text>
+                <text x="550" y="510" class="label-text">"You should not build your business to compete with competitors but to serve your desired customers the best way you can."</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 4. 12-PHASE FLOW ▬▬▬▬ -->
+    <section class="section reveal" id="phases">
+        <div class="section-head">
+            <span class="section-num">04</span>
+            <h2>12-Phase GTM Methodology</h2>
+            <p>Each phase feeds the next — break the chain anywhere and the whole system falls apart.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Sequential Phase Flow — Foundations to Execution</div>
+            <svg viewBox="0 0 1100 820" xmlns="http://www.w3.org/2000/svg">
+                <!-- Phase nodes in a winding path -->
+                <!-- Row 1 -->
+                <rect x="20" y="20" width="160" height="65" rx="10" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="100" y="42" class="node-text" style="fill:#d4a843; font-size:9px;">PHASE 1</text>
+                <text x="100" y="60" class="node-text-lg" style="font-size:11px;">GTM Foundations</text>
+                <text x="100" y="74" class="node-text-sm">OPE · SWOT · Value Prop</text>
+
+                <line x1="180" y1="52" x2="220" y2="52" class="arrow-line" stroke="#d4a843"/>
+
+                <rect x="220" y="20" width="160" height="65" rx="10" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="300" y="42" class="node-text" style="fill:#5b9bd5; font-size:9px;">PHASE 2</text>
+                <text x="300" y="60" class="node-text-lg" style="font-size:11px;">Collect Intel</text>
+                <text x="300" y="74" class="node-text-sm">Segments · Interviews</text>
+
+                <line x1="380" y1="52" x2="420" y2="52" class="arrow-line" stroke="#5b9bd5"/>
+
+                <rect x="420" y="20" width="160" height="65" rx="10" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="500" y="42" class="node-text" style="fill:#5cb87a; font-size:9px;">PHASE 3</text>
+                <text x="500" y="60" class="node-text-lg" style="font-size:11px;">Validate Customers</text>
+                <text x="500" y="74" class="node-text-sm">Experiments · ICP</text>
+
+                <line x1="580" y1="52" x2="620" y2="52" class="arrow-line" stroke="#5cb87a"/>
+
+                <rect x="620" y="20" width="160" height="65" rx="10" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="700" y="42" class="node-text" style="fill:#9b7dd4; font-size:9px;">PHASE 4</text>
+                <text x="700" y="60" class="node-text-lg" style="font-size:11px;">Build Product</text>
+                <text x="700" y="74" class="node-text-sm">JTBD · MVP · Metrics</text>
+
+                <line x1="780" y1="52" x2="820" y2="52" class="arrow-line" stroke="#9b7dd4"/>
+
+                <rect x="820" y="20" width="160" height="65" rx="10" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5"/>
+                <text x="900" y="42" class="node-text" style="fill:#d45b5b; font-size:9px;">PHASE 5</text>
+                <text x="900" y="60" class="node-text-lg" style="font-size:11px;">Set Pricing</text>
+                <text x="900" y="74" class="node-text-sm">WTP · Business Model</text>
+
+                <!-- Turn down -->
+                <line x1="980" y1="85" x2="980" y2="130" class="arrow-line" stroke="#d45b5b"/>
+                <path d="M 980 110 Q 980 130 960 130" class="arrow-line" stroke="#d45b5b" fill="none"/>
+
+                <!-- Row 2 (right to left) -->
+                <rect x="820" y="130" width="160" height="65" rx="10" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="900" y="152" class="node-text" style="fill:#d4a843; font-size:9px;">PHASE 6</text>
+                <text x="900" y="170" class="node-text-lg" style="font-size:11px;">Craft Positioning</text>
+                <text x="900" y="184" class="node-text-sm">UVP · USP · Messaging</text>
+
+                <line x1="820" y1="162" x2="780" y2="162" class="arrow-line" stroke="#d4a843"/>
+
+                <rect x="620" y="130" width="160" height="65" rx="10" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="700" y="152" class="node-text" style="fill:#5b9bd5; font-size:9px;">PHASE 7</text>
+                <text x="700" y="170" class="node-text-lg" style="font-size:11px;">Launch Assets</text>
+                <text x="700" y="184" class="node-text-sm">Website · Demo · Deck</text>
+
+                <line x1="620" y1="162" x2="580" y2="162" class="arrow-line" stroke="#5b9bd5"/>
+
+                <rect x="420" y="130" width="160" height="65" rx="10" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="500" y="152" class="node-text" style="fill:#5cb87a; font-size:9px;">PHASE 8</text>
+                <text x="500" y="170" class="node-text-lg" style="font-size:11px;">Comms Engine</text>
+                <text x="500" y="184" class="node-text-sm">Motions · Channels · Funnel</text>
+
+                <line x1="420" y1="162" x2="380" y2="162" class="arrow-line" stroke="#5cb87a"/>
+
+                <rect x="220" y="130" width="160" height="65" rx="10" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="300" y="152" class="node-text" style="fill:#9b7dd4; font-size:9px;">PHASE 9</text>
+                <text x="300" y="170" class="node-text-lg" style="font-size:11px;">🚀 LAUNCH</text>
+                <text x="300" y="184" class="node-text-sm">Email · Events · PR</text>
+
+                <line x1="220" y1="162" x2="180" y2="162" class="arrow-line" stroke="#9b7dd4"/>
+
+                <rect x="20" y="130" width="160" height="65" rx="10" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5"/>
+                <text x="100" y="152" class="node-text" style="fill:#d45b5b; font-size:9px;">PHASE 10</text>
+                <text x="100" y="170" class="node-text-lg" style="font-size:11px;">Build GTM System</text>
+                <text x="100" y="184" class="node-text-sm">CRM · SOPs · Sprints</text>
+
+                <!-- Turn down left -->
+                <line x1="20" y1="162" x2="20" y2="240" class="arrow-line" stroke="#d45b5b"/>
+
+                <!-- Row 3 -->
+                <rect x="20" y="240" width="220" height="65" rx="10" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="130" y="262" class="node-text" style="fill:#d4a843; font-size:9px;">PHASE 11</text>
+                <text x="130" y="280" class="node-text-lg" style="font-size:11px;">Running Marketing</text>
+                <text x="130" y="294" class="node-text-sm">Narrative · Content · Email · Paid · Community</text>
+
+                <line x1="240" y1="272" x2="300" y2="272" class="arrow-line" stroke="#d4a843"/>
+
+                <rect x="300" y="240" width="220" height="65" rx="10" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="410" y="262" class="node-text" style="fill:#5b9bd5; font-size:9px;">PHASE 12</text>
+                <text x="410" y="280" class="node-text-lg" style="font-size:11px;">Executing Sales</text>
+                <text x="410" y="294" class="node-text-sm">Sales Deck · Case Studies · Outbound · ABM</text>
+
+                <!-- Chain broken metaphor -->
+                <text x="700" y="272" class="label-text" style="font-size:12px; fill:#d4a843;">Each phase feeds the next</text>
+                <text x="700" y="292" class="label-text" style="font-size:10px;">Break the chain anywhere</text>
+                <text x="700" y="308" class="label-text" style="font-size:10px; fill:#d45b5b;">and the whole system falls apart</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 5. STRATEGY DECISION TREE ▬▬▬▬ -->
+    <section class="section reveal" id="decision">
+        <div class="section-head">
+            <span class="section-num">05</span>
+            <h2>GTM Strategy Decision Tree</h2>
+            <p>Use this decision tree to identify which GTM strategy type fits your business context.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Strategy Selection Decision Tree</div>
+            <svg viewBox="0 0 1100 650" xmlns="http://www.w3.org/2000/svg">
+                <!-- Root Question -->
+                <rect x="380" y="15" width="340" height="55" rx="28" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="38" class="node-text-lg" style="font-size:12px;">What's your primary</text>
+                <text x="550" y="55" class="node-text-lg" style="font-size:12px;">go-to-market goal?</text>
+
+                <!-- Level 1 branches -->
+                <line x1="450" y1="70" x2="200" y2="120" class="arrow-line" stroke="#d4a843"/>
+                <line x1="550" y1="70" x2="550" y2="120" class="arrow-line" stroke="#d4a843"/>
+                <line x1="650" y1="70" x2="900" y2="120" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Q1: High-Value Accounts -->
+                <rect x="80" y="120" width="240" height="45" rx="8" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="200" y="140" class="node-text-lg" style="font-size:11px;">Target high-value</text>
+                <text x="200" y="154" class="node-text-lg" style="font-size:11px;">enterprise accounts?</text>
+
+                <!-- Q2: Attract organically -->
+                <rect x="420" y="120" width="260" height="45" rx="8" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="550" y="140" class="node-text-lg" style="font-size:11px;">Want to attract</text>
+                <text x="550" y="154" class="node-text-lg" style="font-size:11px;">customers organically?</text>
+
+                <!-- Q3: Product speaks -->
+                <rect x="780" y="120" width="240" height="45" rx="8" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="900" y="140" class="node-text-lg" style="font-size:11px;">Let the product</text>
+                <text x="900" y="154" class="node-text-lg" style="font-size:11px;">speak for itself?</text>
+
+                <!-- ABM Answer -->
+                <line x1="200" y1="165" x2="200" y2="210" class="arrow-line" stroke="#5b9bd5"/>
+                <rect x="60" y="210" width="280" height="80" rx="12" fill="var(--elevated)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="200" y="235" class="node-text-lg" style="font-size:13px; fill:#5b9bd5;">ACCOUNT-BASED</text>
+                <text x="200" y="252" class="node-text-lg" style="font-size:13px; fill:#5b9bd5;">MARKETING (ABM)</text>
+                <text x="200" y="275" class="node-text-sm">High-ticket · Long sales cycles</text>
+
+                <!-- Inbound Answer -->
+                <line x1="550" y1="165" x2="550" y2="210" class="arrow-line" stroke="#5cb87a"/>
+                <rect x="400" y="210" width="300" height="80" rx="12" fill="var(--elevated)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="550" y="235" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">INBOUND</text>
+                <text x="550" y="252" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">MARKETING</text>
+                <text x="550" y="275" class="node-text-sm">Content · SEO · Trust-building</text>
+
+                <!-- PLG Answer -->
+                <line x1="900" y1="165" x2="900" y2="210" class="arrow-line" stroke="#9b7dd4"/>
+                <rect x="760" y="210" width="280" height="80" rx="12" fill="var(--elevated)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="900" y="235" class="node-text-lg" style="font-size:13px; fill:#9b7dd4;">PRODUCT-LED</text>
+                <text x="900" y="252" class="node-text-lg" style="font-size:13px; fill:#9b7dd4;">GROWTH (PLG)</text>
+                <text x="900" y="275" class="node-text-sm">Freemium · Self-serve · Data-driven</text>
+
+                <!-- Additional branches from ABM -->
+                <line x1="200" y1="290" x2="200" y2="330" class="arrow-dash" stroke="#5b9bd5"/>
+                <rect x="70" y="330" width="130" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="135" y="352" class="node-text" style="font-size:10px;">SALES</text>
+                <text x="135" y="368" class="node-text" style="font-size:10px;">ENABLEMENT</text>
+                <text x="135" y="380" class="node-text-sm">Tools · Training</text>
+
+                <rect x="210" y="330" width="140" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="280" y="352" class="node-text" style="font-size:10px;">CHANNEL</text>
+                <text x="280" y="368" class="node-text" style="font-size:10px;">PARTNERS</text>
+                <text x="280" y="380" class="node-text-sm">Resellers · Agencies</text>
+
+                <!-- B2B vs B2C section -->
+                <text x="550" y="350" class="label-text" style="font-size:12px; fill:#d4a843;">CUSTOMER TYPE IMPACTS EVERYTHING</text>
+
+                <rect x="250" y="380" width="250" height="100" rx="12" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1"/>
+                <text x="375" y="405" class="node-text-lg" style="font-size:13px; fill:#5b9bd5;">B2B GTM</text>
+                <text x="375" y="425" class="node-text-sm">Longer sales cycles</text>
+                <text x="375" y="440" class="node-text-sm">Multiple decision-makers</text>
+                <text x="375" y="455" class="node-text-sm">ROI &amp; lifetime value focus</text>
+                <text x="375" y="470" class="node-text-sm">Custom pricing · Thought leadership</text>
+
+                <rect x="600" y="380" width="250" height="100" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1"/>
+                <text x="725" y="405" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">B2C GTM</text>
+                <text x="725" y="425" class="node-text-sm">Transactional relationships</text>
+                <text x="725" y="440" class="node-text-sm">Simpler buying process</text>
+                <text x="725" y="455" class="node-text-sm">Broad audience targeting</text>
+                <text x="725" y="470" class="node-text-sm">Dynamic pricing · Influencers</text>
+
+                <!-- vs divider -->
+                <text x="530" y="435" class="label-text" style="font-size:14px; fill:#d4a843;">vs</text>
+
+                <!-- Bottom recommendation -->
+                <rect x="300" y="520" width="500" height="70" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="550" y="545" class="node-text-lg" style="font-size:12px;">BEST PRACTICE: Combine strategies</text>
+                <text x="550" y="565" class="node-text-sm">Most successful companies use a hybrid approach — PLG + Sales-Assisted + Content Marketing</text>
+                <text x="550" y="580" class="node-text-sm">Layer multiple motions as you scale from seed to growth stage</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 6. GTM FUNNEL ▬▬▬▬ -->
+    <section class="section reveal" id="funnel">
+        <div class="section-head">
+            <span class="section-num">06</span>
+            <h2>GTM Sales &amp; Marketing Funnel</h2>
+            <p>The modern GTM funnel with metrics, touchpoints, and actions at every stage.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Full-Funnel GTM Architecture</div>
+            <svg viewBox="0 0 1100 680" xmlns="http://www.w3.org/2000/svg">
+                <!-- Funnel shape -->
+                <!-- Stage 1: Awareness (widest) -->
+                <polygon points="100,30 1000,30 950,130 150,130" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5" opacity="0.8"/>
+                <text x="550" y="65" class="node-text-lg" style="font-size:15px; fill:#d4a843;">AWARENESS</text>
+                <text x="550" y="90" class="node-text-sm">Content · SEO · Social · PR · Paid Ads · Events</text>
+                <text x="550" y="110" class="label-text" fill="#d4a843">METRIC: Brand Reach · Impressions · Traffic</text>
+
+                <!-- Stage 2: Interest -->
+                <polygon points="150,130 950,130 900,230 200,230" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5" opacity="0.8"/>
+                <text x="550" y="165" class="node-text-lg" style="font-size:15px; fill:#5b9bd5;">INTEREST</text>
+                <text x="550" y="190" class="node-text-sm">Blog Posts · Webinars · Lead Magnets · Email Nurture</text>
+                <text x="550" y="210" class="label-text" fill="#5b9bd5">METRIC: MQLs · Email Signups · Content Engagement</text>
+
+                <!-- Stage 3: Consideration -->
+                <polygon points="200,230 900,230 850,330 250,330" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5" opacity="0.8"/>
+                <text x="550" y="265" class="node-text-lg" style="font-size:15px; fill:#9b7dd4;">CONSIDERATION</text>
+                <text x="550" y="290" class="node-text-sm">Demos · Free Trials · Case Studies · Comparisons</text>
+                <text x="550" y="310" class="label-text" fill="#9b7dd4">METRIC: SQLs · Demo Requests · Trial Signups</text>
+
+                <!-- Stage 4: Decision -->
+                <polygon points="250,330 850,330 800,430 300,430" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5" opacity="0.8"/>
+                <text x="550" y="365" class="node-text-lg" style="font-size:15px; fill:#5cb87a;">DECISION</text>
+                <text x="550" y="390" class="node-text-sm">Proposals · Negotiations · ROI Calculators · References</text>
+                <text x="550" y="410" class="label-text" fill="#5cb87a">METRIC: Win Rate · Deal Size · Sales Cycle Length</text>
+
+                <!-- Stage 5: Purchase -->
+                <polygon points="300,430 800,430 760,510 340,510" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5" opacity="0.8"/>
+                <text x="550" y="462" class="node-text-lg" style="font-size:15px; fill:#d45b5b;">PURCHASE</text>
+                <text x="550" y="485" class="node-text-sm">Onboarding · Welcome Email · Implementation Support</text>
+                <text x="550" y="502" class="label-text" fill="#d45b5b">METRIC: Conversion Rate · ARPU · Time to Close</text>
+
+                <!-- Stage 6: Retention & Advocacy -->
+                <rect x="340" y="530" width="420" height="70" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="558" class="node-text-lg" style="font-size:15px; fill:#d4a843;">RETENTION &amp; ADVOCACY</text>
+                <text x="550" y="580" class="node-text-sm">Customer Success · Upsell · Cross-sell · Referrals · Reviews</text>
+                <text x="550" y="595" class="label-text" fill="#d4a843">METRIC: NRR · Churn · NPS · CLV</text>
+
+                <!-- Side annotations -->
+                <!-- Left side: GTM Actions -->
+                <text x="50" y="80" class="label-text" style="font-size:10px; fill:#d4a843; writing-mode: tb;">GTM ACTIONS</text>
+
+                <!-- Right side: Metrics -->
+                <text x="1060" y="80" class="label-text" style="font-size:10px; fill:#5cb87a; writing-mode: tb;">METRICS &amp; KPIs</text>
+
+                <!-- Flow arrow on far right -->
+                <line x1="1050" y1="50" x2="1050" y2="580" stroke="#d4a843" stroke-width="1" opacity="0.2" stroke-dasharray="4,3"/>
+                <text x="1050" y="610" class="label-text" fill="#d4a843" style="writing-mode: tb;">CONVERSION ↓</text>
+
+                <!-- Bottom insight -->
+                <text x="550" y="640" class="label-text" style="font-size:11px;">Modern GTM is non-linear — buyers jump stages. Your system must be ready at every touchpoint.</text>
+                <text x="550" y="660" class="label-text">Signal-based outreach at the right stage dramatically increases conversion rates.</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 7. EMAIL OUTREACH FLOW ▬▬▬▬ -->
+    <section class="section reveal" id="email-flow">
+        <div class="section-head">
+            <span class="section-num">07</span>
+            <h2>Outbound Email Outreach Flow</h2>
+            <p>The signal-based outbound email system — from trigger detection to reply handling.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Signal-Based Outbound Email System</div>
+            <svg viewBox="0 0 1100 700" xmlns="http://www.w3.org/2000/svg">
+                <!-- Signal Detection Box -->
+                <rect x="350" y="15" width="400" height="70" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="40" class="node-text-lg" style="font-size:14px; fill:#d4a843;">SIGNAL DETECTION</text>
+                <text x="550" y="60" class="node-text-sm">Monitor for triggers across target accounts</text>
+
+                <!-- Signal types -->
+                <line x1="550" y1="85" x2="550" y2="120" class="arrow-line" stroke="#d4a843"/>
+
+                <rect x="50" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="120" y="140" class="node-text" style="font-size:10px;">Hiring</text>
+                <text x="120" y="155" class="node-text-sm">Job postings</text>
+
+                <rect x="210" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="280" y="140" class="node-text" style="font-size:10px;">Funding</text>
+                <text x="280" y="155" class="node-text-sm">Series announcements</text>
+
+                <rect x="370" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="440" y="140" class="node-text" style="font-size:10px;">Tech Stack</text>
+                <text x="440" y="155" class="node-text-sm">Tool usage signals</text>
+
+                <rect x="530" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="600" y="140" class="node-text" style="font-size:10px;">Intent Data</text>
+                <text x="600" y="155" class="node-text-sm">Category research</text>
+
+                <rect x="690" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="760" y="140" class="node-text" style="font-size:10px;">Events</text>
+                <text x="760" y="155" class="node-text-sm">News · Launches</text>
+
+                <rect x="850" y="120" width="140" height="50" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="920" y="140" class="node-text" style="font-size:10px;">Competitor</text>
+                <text x="920" y="155" class="node-text-sm">Competitive usage</text>
+
+                <line x1="120" y1="120" x2="400" y2="85" class="arrow-dash" stroke="#d4a843"/>
+                <line x1="280" y1="120" x2="450" y2="85" class="arrow-dash" stroke="#d4a843"/>
+                <line x1="440" y1="120" x2="500" y2="85" class="arrow-dash" stroke="#d4a843"/>
+                <line x1="600" y1="120" x2="600" y2="85" class="arrow-dash" stroke="#d4a843"/>
+                <line x1="760" y1="120" x2="650" y2="85" class="arrow-dash" stroke="#d4a843"/>
+                <line x1="920" y1="120" x2="700" y2="85" class="arrow-dash" stroke="#d4a843"/>
+
+                <!-- Arrow down -->
+                <line x1="550" y1="170" x2="550" y2="210" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Template Selection -->
+                <rect x="350" y="210" width="400" height="60" rx="12" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="550" y="235" class="node-text-lg" style="font-size:13px; fill:#5b9bd5;">MATCH TEMPLATE TO SIGNAL</text>
+                <text x="550" y="255" class="node-text-sm">Select the email framework that fits the trigger type</text>
+
+                <!-- Template types -->
+                <line x1="550" y1="270" x2="550" y2="300" class="arrow-line" stroke="#5b9bd5"/>
+
+                <rect x="80" y="300" width="180" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="170" y="322" class="node-text" style="font-size:10px;">Observation + Insight</text>
+                <text x="170" y="340" class="node-text-sm">Research-driven value</text>
+
+                <rect x="280" y="300" width="180" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="370" y="322" class="node-text" style="font-size:10px;">Trigger-Based Offer</text>
+                <text x="370" y="340" class="node-text-sm">Timely, relevant context</text>
+
+                <rect x="480" y="300" width="180" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="570" y="322" class="node-text" style="font-size:10px;">Direct + Guarantee</text>
+                <text x="570" y="340" class="node-text-sm">Risk reversal pitch</text>
+
+                <rect x="680" y="300" width="180" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="770" y="322" class="node-text" style="font-size:10px;">Strategic Question</text>
+                <text x="770" y="340" class="node-text-sm">Open dialogue hook</text>
+
+                <rect x="880" y="300" width="160" height="55" rx="8" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="960" y="322" class="node-text" style="font-size:10px;">Video Audit</text>
+                <text x="960" y="340" class="node-text-sm">Personalized media</text>
+
+                <!-- Arrow down -->
+                <line x1="550" y1="355" x2="550" y2="390" class="arrow-line" stroke="#5b9bd5"/>
+
+                <!-- Send Email -->
+                <rect x="400" y="390" width="300" height="55" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="550" y="413" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">SEND EMAIL</text>
+                <text x="550" y="433" class="node-text-sm">Subject · Opening · Value · CTA · P.S.</text>
+
+                <!-- Branch: Reply or No Reply -->
+                <line x1="450" y1="445" x2="250" y2="490" class="arrow-line" stroke="#5cb87a"/>
+                <line x1="650" y1="445" x2="850" y2="490" class="arrow-line" stroke="#d45b5b"/>
+
+                <!-- Reply branch -->
+                <rect x="100" y="490" width="300" height="55" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="250" y="513" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">GOT REPLY ✓</text>
+                <text x="250" y="533" class="node-text-sm">Qualify · Book meeting · Continue conversation</text>
+
+                <text x="350" y="480" class="label-text" fill="#5cb87a">REPLY</text>
+
+                <!-- No Reply branch -->
+                <rect x="700" y="490" width="300" height="55" rx="12" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5"/>
+                <text x="850" y="513" class="node-text-lg" style="font-size:13px; fill:#d45b5b;">NO REPLY</text>
+                <text x="850" y="533" class="node-text-sm">Wait 3-5 days · New signal · Follow-up</text>
+
+                <text x="750" y="480" class="label-text" fill="#d45b5b">NO REPLY</text>
+
+                <!-- Follow-up loop -->
+                <line x1="850" y1="545" x2="850" y2="580" class="arrow-line" stroke="#d45b5b"/>
+                <rect x="700" y="580" width="300" height="50" rx="12" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="850" y="600" class="node-text" style="font-size:10px;">FOLLOW-UP SEQUENCE</text>
+                <text x="850" y="618" class="node-text-sm">New angle · Different channel · Fresh signal</text>
+
+                <!-- Loop back up -->
+                <path d="M 1000 605 Q 1050 605 1050 420 Q 1050 240 550 240" class="arrow-dash" stroke="#d4a843" fill="none"/>
+                <text x="1040" y="420" class="label-text" fill="#d4a843" style="writing-mode: tb; font-size:9px;">NEW SIGNAL</text>
+
+                <!-- Conversion outcome -->
+                <line x1="250" y1="545" x2="250" y2="590" class="arrow-line" stroke="#5cb87a"/>
+                <rect x="100" y="590" width="300" height="50" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="250" y="613" class="node-text-lg" style="font-size:13px; fill:#d4a843;">DEMO → PIPELINE → CLOSED WON</text>
+                <text x="250" y="630" class="node-text-sm">Revenue generated from signal-based outbound</text>
+
+                <!-- Bottom insight -->
+                <text x="550" y="670" class="label-text" style="font-size:11px;">Signal-based outreach connecting messages to real events consistently outperforms spray-and-pray volume.</text>
+                <text x="550" y="690" class="label-text">When you tie your outreach to real events, reply rates jump significantly.</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 8. METRICS ECOSYSTEM ▬▬▬▬ -->
+    <section class="section reveal" id="metrics">
+        <div class="section-head">
+            <span class="section-num">08</span>
+            <h2>GTM Metrics Ecosystem</h2>
+            <p>How key metrics interconnect across acquisition, revenue, retention, and market dimensions.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Interconnected Metrics Map</div>
+            <svg viewBox="0 0 1100 600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Center: GTM Health -->
+                <circle cx="550" cy="280" r="70" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="272" class="node-text-lg" style="font-size:13px;">GTM</text>
+                <text x="550" y="292" class="node-text-lg" style="font-size:13px;">HEALTH</text>
+
+                <!-- Quadrant 1: Acquisition (Top-Left) -->
+                <circle cx="200" cy="120" r="55" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="200" y="112" class="node-text" style="font-size:10px; fill:#5b9bd5;">ACQUISITION</text>
+                <text x="200" y="128" class="node-text-sm">CAC · MQLs</text>
+                <line x1="245" y1="155" x2="495" y2="250" stroke="#5b9bd5" stroke-width="1" opacity="0.3"/>
+
+                <!-- Quadrant 2: Revenue (Top-Right) -->
+                <circle cx="900" cy="120" r="55" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="900" y="112" class="node-text" style="font-size:10px; fill:#5cb87a;">REVENUE</text>
+                <text x="900" y="128" class="node-text-sm">MRR · ARPU</text>
+                <line x1="855" y1="155" x2="605" y2="250" stroke="#5cb87a" stroke-width="1" opacity="0.3"/>
+
+                <!-- Quadrant 3: Retention (Bottom-Left) -->
+                <circle cx="200" cy="450" r="55" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="200" y="442" class="node-text" style="font-size:10px; fill:#9b7dd4;">RETENTION</text>
+                <text x="200" y="458" class="node-text-sm">Churn · CLV</text>
+                <line x1="245" y1="415" x2="495" y2="310" stroke="#9b7dd4" stroke-width="1" opacity="0.3"/>
+
+                <!-- Quadrant 4: Market (Bottom-Right) -->
+                <circle cx="900" cy="450" r="55" fill="url(#grad-red)" stroke="#d45b5b" stroke-width="1.5"/>
+                <text x="900" y="442" class="node-text" style="font-size:10px; fill:#d45b5b;">MARKET</text>
+                <text x="900" y="458" class="node-text-sm">Share · Awareness</text>
+                <line x1="855" y1="415" x2="605" y2="310" stroke="#d45b5b" stroke-width="1" opacity="0.3"/>
+
+                <!-- Sub-metrics around each quadrant -->
+                <!-- Acquisition sub -->
+                <rect x="60" y="30" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="115" y="52" class="node-text-sm">Lead-to-Customer %</text>
+                <rect x="280" y="30" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="335" y="52" class="node-text-sm">SQLs Generated</text>
+                <rect x="160" y="200" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="215" y="222" class="node-text-sm">Cost per Lead</text>
+
+                <!-- Revenue sub -->
+                <rect x="750" y="30" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="805" y="52" class="node-text-sm">Deal Size</text>
+                <rect x="880" y="30" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="935" y="52" class="node-text-sm">Win Rate</text>
+                <rect x="820" y="200" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="875" y="222" class="node-text-sm">Sales Cycle</text>
+
+                <!-- Retention sub -->
+                <rect x="60" y="370" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="115" y="392" class="node-text-sm">NPS Score</text>
+                <rect x="60" y="530" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="115" y="552" class="node-text-sm">NRR %</text>
+                <rect x="270" y="420" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="325" y="442" class="node-text-sm">Expansion Rev</text>
+
+                <!-- Market sub -->
+                <rect x="880" y="370" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="935" y="392" class="node-text-sm">Brand Searches</text>
+                <rect x="880" y="530" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="935" y="552" class="node-text-sm">Social Mentions</text>
+                <rect x="700" y="420" width="110" height="35" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="755" y="442" class="node-text-sm">Competitive Win %</text>
+
+                <!-- Connecting relationships -->
+                <line x1="255" y1="120" x2="845" y2="120" stroke="#d4a843" stroke-width="1" opacity="0.15" stroke-dasharray="6,4"/>
+                <line x1="255" y1="450" x2="845" y2="450" stroke="#d4a843" stroke-width="1" opacity="0.15" stroke-dasharray="6,4"/>
+                <line x1="200" y1="175" x2="200" y2="395" stroke="#d4a843" stroke-width="1" opacity="0.15" stroke-dasharray="6,4"/>
+                <line x1="900" y1="175" x2="900" y2="395" stroke="#d4a843" stroke-width="1" opacity="0.15" stroke-dasharray="6,4"/>
+
+                <text x="550" y="570" class="label-text" style="font-size:11px;">All four quadrants are interconnected — improving acquisition without retention is a leaky bucket</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 9. BEACHHEAD STRATEGY ▬▬▬▬ -->
+    <section class="section reveal" id="beachhead">
+        <div class="section-head">
+            <span class="section-num">09</span>
+            <h2>Beachhead Market Entry Strategy</h2>
+            <p>The proven framework for expanding into new markets — validated by Bolt Drive's on-demand car rental expansion.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">Beachhead Expansion Sequence</div>
+            <svg viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg">
+                <!-- Beach/wave metaphor at bottom -->
+                <path d="M 0 450 Q 100 430 200 450 Q 300 470 400 450 Q 500 430 600 450 Q 700 470 800 450 Q 900 430 1000 450 L 1100 450 L 1100 520 L 0 520 Z" fill="#d4a843" opacity="0.05"/>
+                <path d="M 0 460 Q 150 440 300 460 Q 450 480 600 460 Q 750 440 900 460 Q 1050 480 1100 460" stroke="#d4a843" stroke-width="1" opacity="0.15" fill="none"/>
+
+                <!-- Phase 1: Pre-Launch Team -->
+                <rect x="30" y="30" width="250" height="140" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="155" y="58" class="node-text-lg" style="font-size:13px; fill:#d4a843;">1. PRE-LAUNCH TEAM</text>
+                <text x="155" y="80" class="node-text-sm">Small, high-capacity (3 people)</text>
+                <text x="155" y="100" class="node-text-sm">→ Team Lead / Founder-type</text>
+                <text x="155" y="115" class="node-text-sm">→ Local Business Developer</text>
+                <text x="155" y="130" class="node-text-sm">→ Junior Developer / Assistant</text>
+                <text x="155" y="155" class="label-text" fill="#d4a843">3-6 MONTHS PRE-LAUNCH</text>
+
+                <line x1="280" y1="100" x2="330" y2="100" class="arrow-line" stroke="#d4a843"/>
+
+                <!-- Phase 2: Assumption Mapping -->
+                <rect x="330" y="30" width="250" height="140" rx="12" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="455" y="58" class="node-text-lg" style="font-size:13px; fill:#5b9bd5;">2. ASSUMPTION MAPPING</text>
+                <text x="455" y="80" class="node-text-sm">Design initial business plan</text>
+                <text x="455" y="100" class="node-text-sm">→ Business Model Canvas</text>
+                <text x="455" y="115" class="node-text-sm">→ Map knowns vs. unknowns</text>
+                <text x="455" y="130" class="node-text-sm">→ Identify all hypotheses</text>
+                <text x="455" y="155" class="label-text" fill="#5b9bd5">SYSTEMATIC VALIDATION</text>
+
+                <line x1="580" y1="100" x2="630" y2="100" class="arrow-line" stroke="#5b9bd5"/>
+
+                <!-- Phase 3: Validate -->
+                <rect x="630" y="30" width="250" height="140" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="755" y="58" class="node-text-lg" style="font-size:13px; fill:#5cb87a;">3. VALIDATE BEFORE SCALE</text>
+                <text x="755" y="80" class="node-text-sm">Test all assumptions in market</text>
+                <text x="755" y="100" class="node-text-sm">→ Customer interviews</text>
+                <text x="755" y="115" class="node-text-sm">→ MVP experiments</text>
+                <text x="755" y="130" class="node-text-sm">→ Measure real demand</text>
+                <text x="755" y="155" class="label-text" fill="#5cb87a">REDUCE WASTE</text>
+
+                <!-- Arrow down to expansion -->
+                <line x1="755" y1="170" x2="755" y2="220" class="arrow-line" stroke="#5cb87a"/>
+
+                <!-- Phase 4: Select Beachhead -->
+                <rect x="380" y="220" width="350" height="70" rx="12" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="2"/>
+                <text x="555" y="248" class="node-text-lg" style="font-size:14px; fill:#9b7dd4;">4. SELECT BEACHHEAD MARKET</text>
+                <text x="555" y="270" class="node-text-sm">Niche segment to dominate first — "serve your desired customers the best way you can"</text>
+
+                <!-- Expand from beachhead -->
+                <line x1="450" y1="290" x2="250" y2="340" class="arrow-line" stroke="#9b7dd4"/>
+                <line x1="555" y1="290" x2="555" y2="340" class="arrow-line" stroke="#9b7dd4"/>
+                <line x1="660" y1="290" x2="860" y2="340" class="arrow-line" stroke="#9b7dd4"/>
+
+                <!-- Phase 5: Adjacent markets -->
+                <rect x="100" y="340" width="200" height="80" rx="12" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="200" y="368" class="node-text-lg" style="font-size:12px;">ADJACENT MARKET</text>
+                <text x="200" y="388" class="node-text-sm">Apply learnings to</text>
+                <text x="200" y="403" class="node-text-sm">next segment</text>
+
+                <rect x="430" y="340" width="250" height="80" rx="12" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="555" y="368" class="node-text-lg" style="font-size:12px;">SCALE OPERATIONS</text>
+                <text x="555" y="388" class="node-text-sm">Build repeatable playbooks</text>
+                <text x="555" y="403" class="node-text-sm">Hire · Automate · Optimize</text>
+
+                <rect x="750" y="340" width="220" height="80" rx="12" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="860" y="368" class="node-text-lg" style="font-size:12px;">NEW GEOGRAPHY</text>
+                <text x="860" y="388" class="node-text-sm">Replicate the beachhead</text>
+                <text x="860" y="403" class="node-text-sm">in new regions</text>
+
+                <!-- Progression dots -->
+                <circle cx="200" cy="460" r="8" fill="#d4a843" opacity="0.3"/>
+                <circle cx="350" cy="460" r="8" fill="#d4a843" opacity="0.4"/>
+                <circle cx="500" cy="460" r="8" fill="#d4a843" opacity="0.55"/>
+                <circle cx="650" cy="460" r="8" fill="#d4a843" opacity="0.7"/>
+                <circle cx="800" cy="460" r="8" fill="#d4a843" opacity="0.85"/>
+                <circle cx="950" cy="460" r="8" fill="#d4a843" opacity="1"/>
+                <text x="550" y="498" class="label-text" style="font-size:11px;">Dominate niche → Adjacent markets → Scale operations → New geographies</text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ▬▬▬▬ 10. GTM OPERATING SYSTEM ▬▬▬▬ -->
+    <section class="section reveal" id="gtm-os">
+        <div class="section-head">
+            <span class="section-num">10</span>
+            <h2>GTM Operating System — Component Map</h2>
+            <p>How all GTM components interconnect as a living system with feedback loops at every layer.</p>
+        </div>
+
+        <div class="diagram-wrap">
+            <div class="diagram-title">GTM Operating System — Layer Architecture</div>
+            <svg viewBox="0 0 1100 650" xmlns="http://www.w3.org/2000/svg">
+                <!-- Layer 1: Foundation (bottom) -->
+                <rect x="50" y="520" width="1000" height="80" rx="12" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="1.5"/>
+                <text x="550" y="548" class="node-text-lg" style="font-size:14px; fill:#d4a843;">FOUNDATION LAYER</text>
+                <text x="200" y="575" class="node-text-sm">Market Research</text>
+                <text x="400" y="575" class="node-text-sm">ICP Definition</text>
+                <text x="600" y="node-text-sm" y="575" class="node-text-sm">Competitive Intel</text>
+                <text x="800" y="575" class="node-text-sm">Value Proposition</text>
+                <text x="960" y="575" class="node-text-sm">Pricing</text>
+
+                <!-- Layer 2: Strategy -->
+                <rect x="50" y="390" width="1000" height="100" rx="12" fill="url(#grad-blue)" stroke="#5b9bd5" stroke-width="1.5"/>
+                <text x="550" y="418" class="node-text-lg" style="font-size:14px; fill:#5b9bd5;">STRATEGY LAYER</text>
+                <text x="150" y="448" class="node-text-sm">Positioning</text>
+                <text x="320" y="448" class="node-text-sm">Messaging</text>
+                <text x="470" y="448" class="node-text-sm">Sales Motion</text>
+                <text x="620" y="448" class="node-text-sm">Channel Mix</text>
+                <text x="770" y="448" class="node-text-sm">Content Strategy</text>
+                <text x="940" y="448" class="node-text-sm">Launch Plan</text>
+                <rect x="200" y="460" width="160" height="20" rx="4" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="280" y="474" class="node-text-sm">Sales Playbook</text>
+                <rect x="600" y="460" width="180" height="20" rx="4" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="690" y="474" class="node-text-sm">Campaign Playbooks</text>
+
+                <!-- Layer 3: Execution -->
+                <rect x="50" y="250" width="1000" height="110" rx="12" fill="url(#grad-green)" stroke="#5cb87a" stroke-width="1.5"/>
+                <text x="550" y="278" class="node-text-lg" style="font-size:14px; fill:#5cb87a;">EXECUTION LAYER</text>
+                <!-- Execution boxes -->
+                <rect x="80" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="145" y="315" class="node-text" style="font-size:10px;">Outbound</text>
+                <text x="145" y="330" class="node-text-sm">Email · Calls</text>
+
+                <rect x="230" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="295" y="315" class="node-text" style="font-size:10px;">Content</text>
+                <text x="295" y="330" class="node-text-sm">Blog · Video · Social</text>
+
+                <rect x="380" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="445" y="315" class="node-text" style="font-size:10px;">Paid Ads</text>
+                <text x="445" y="330" class="node-text-sm">Google · Meta · LI</text>
+
+                <rect x="530" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="595" y="315" class="node-text" style="font-size:10px;">Events</text>
+                <text x="595" y="330" class="node-text-sm">Webinars · Conferences</text>
+
+                <rect x="680" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="745" y="315" class="node-text" style="font-size:10px;">Partners</text>
+                <text x="745" y="330" class="node-text-sm">Resellers · Integrations</text>
+
+                <rect x="830" y="295" width="130" height="45" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="895" y="315" class="node-text" style="font-size:10px;">Community</text>
+                <text x="895" y="330" class="node-text-sm">Advocacy · Referrals</text>
+
+                <!-- Layer 4: Intelligence -->
+                <rect x="50" y="100" width="1000" height="120" rx="12" fill="url(#grad-purple)" stroke="#9b7dd4" stroke-width="1.5"/>
+                <text x="550" y="128" class="node-text-lg" style="font-size:14px; fill:#9b7dd4;">INTELLIGENCE LAYER (AI-POWERED)</text>
+                <rect x="80" y="145" width="200" height="50" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="180" y="167" class="node-text" style="font-size:10px;">Signal Detection</text>
+                <text x="180" y="183" class="node-text-sm">Intent · Triggers · Timing</text>
+
+                <rect x="310" y="145" width="200" height="50" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="410" y="167" class="node-text" style="font-size:10px;">Lead Scoring</text>
+                <text x="410" y="183" class="node-text-sm">AI-powered qualification</text>
+
+                <rect x="540" y="145" width="200" height="50" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="640" y="167" class="node-text" style="font-size:10px;">Personalization</text>
+                <text x="640" y="183" class="node-text-sm">Dynamic messaging</text>
+
+                <rect x="770" y="145" width="240" height="50" rx="6" fill="var(--elevated)" stroke="var(--border)" stroke-width="1"/>
+                <text x="890" y="167" class="node-text" style="font-size:10px;">Predictive Analytics</text>
+                <text x="890" y="183" class="node-text-sm">Forecast · Churn · Upsell</text>
+
+                <!-- Top: Revenue Engine -->
+                <rect x="300" y="20" width="500" height="55" rx="28" fill="url(#grad-gold)" stroke="#d4a843" stroke-width="2"/>
+                <text x="550" y="45" class="node-text-lg" style="font-size:16px; fill:#d4a843;">REVENUE ENGINE</text>
+                <text x="550" y="62" class="node-text-sm">Pipeline · Closed Won · Expansion · Advocacy</text>
+
+                <!-- Vertical connectors -->
+                <line x1="550" y1="75" x2="550" y2="100" stroke="#d4a843" stroke-width="1.5" opacity="0.4"/>
+                <line x1="550" y1="220" x2="550" y2="250" stroke="#9b7dd4" stroke-width="1.5" opacity="0.4"/>
+                <line x1="550" y1="360" x2="550" y2="390" stroke="#5cb87a" stroke-width="1.5" opacity="0.4"/>
+                <line x1="550" y1="490" x2="550" y2="520" stroke="#5b9bd5" stroke-width="1.5" opacity="0.4"/>
+
+                <!-- Feedback arrows on sides -->
+                <path d="M 30 520 Q 10 300 30 100" class="arrow-dash" stroke="#d4a843" fill="none"/>
+                <path d="M 1070 100 Q 1090 300 1070 520" class="arrow-dash" stroke="#d4a843" fill="none"/>
+                <text x="18" y="310" class="label-text" fill="#d4a843" style="writing-mode: tb; font-size:9px;">FEEDBACK ↑</text>
+                <text x="1082" y="310" class="label-text" fill="#d4a843" style="writing-mode: tb; font-size:9px;">INSIGHTS ↓</text>
+            </svg>
+        </div>
+    </section>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--text); margin-bottom:0.5rem;">GTM Playbook — Visual Diagrams</p>
+    <p style="font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em;">10 Diagrams &bull; Flows &bull; Decision Trees &bull; Timelines &bull; Metric Maps</p>
+</footer>
+
+<script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
